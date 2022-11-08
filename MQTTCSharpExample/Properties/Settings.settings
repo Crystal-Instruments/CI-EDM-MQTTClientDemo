@@ -1,0 +1,39 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MQTTExample.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BrokerIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.10.11</Value>
+    </Setting>
+    <Setting Name="BrokerPort" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1883</Value>
+    </Setting>
+    <Setting Name="CommunicationTimeout" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="KeepAliveTimeout" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+    <Setting Name="IsClearSession" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ClientID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">EDM-MQTT-Example-Client</Value>
+    </Setting>
+    <Setting Name="TopicPrefix" Type="System.String" Scope="User">
+      <Value Profile="(Default)">EDM</Value>
+    </Setting>
+    <Setting Name="TLS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">No TLS</Value>
+    </Setting>
+    <Setting Name="Protocol" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3.1.1</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
