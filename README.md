@@ -6,6 +6,8 @@ MQTT is an OASIS standard messaging protocol for the Internet of Things (IoT). I
 
 By implementing MQTT in EDM, users can monitor status of environmental tests (vibration, temperature, humidity) run in EDM VCS and measurements taken in EDM DSA and even remotely run a test. 
 
+These MQTT Client demos can help users in understanding the MQTT protocol extension used in EDM and the topics and commands used in communicating between a MQTT client and EDM.
+
 Here is the EDM MQTT Publish/Subscribe Architecture. 
 
 ![](https://github.com/Crystal-Instruments/CI-EDM-MQTTClientDemo/blob/main/images/CIEDMMQTTNetworkDiagram.png)
