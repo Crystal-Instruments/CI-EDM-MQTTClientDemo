@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph;
-using MQTTCSharpExample;
+using Newtonsoft.Json.Linq;
 
 namespace MQTTCSharpExample
 {
@@ -63,7 +63,7 @@ namespace MQTTCSharpExample
                 {
                     var sig = app[i];
 
-                    if(sig.ValueX == null || sig.ValueY == null)
+                    if (sig.ValueX == null || sig.ValueY == null)
                     {
                         chart.GraphPane.Title.Text = $"No signal data of - {sig.Signal.Name}";
                         chart.GraphPane.Title.FontSpec.FontColor = Color.Red;
@@ -93,7 +93,7 @@ namespace MQTTCSharpExample
                     var xData = sig.ValueX;
                     var yData = sig.ValueY;
 
-                    if(xData != null && yData != null)
+                    if (xData != null && yData != null)
                     {
                         var color = Utility.COLORS[Math.Abs(sig.Signal.Name.GetHashCode()) % Utility.COLORS.Length];
                         bool isShockTest = lblTestType.Text.Contains("Shock");
@@ -105,9 +105,9 @@ namespace MQTTCSharpExample
                             var ret = Utility.CutoffFreqData(signalData, isShockTest);
                             chart.GraphPane.AddCurve(sig.Signal.Name, ret[0], ret[1], color, SymbolType.None);
                         }
-                        else if(isShockTest && sig.Signal.Type == "NonEquidistant")//shock block signal
+                        else if (isShockTest && sig.Signal.Type == "NonEquidistant")//shock block signal
                         {
-                            if(sig.ValueZ?.Length > 1)
+                            if (sig.ValueZ?.Length > 1)
                             {
                                 var zeroIndex = (int)sig.ValueZ[sig.ValueZ.Length - 1];
                                 var zeroValue = xData[zeroIndex];
@@ -119,7 +119,7 @@ namespace MQTTCSharpExample
                         {
                             chart.GraphPane.AddCurve(sig.Signal.Name, xData, yData, color, SymbolType.None);
                         }
-                    }                  
+                    }
                 }
 
 
@@ -144,7 +144,6 @@ namespace MQTTCSharpExample
             tbFileDir.Text = tbReportDir.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             tbClientID.Text = $"EDM-MQTT-Example-Client-{Guid.NewGuid().ToString().ToUpper()}";
         }
-
         void LoadComboBoxSetting(ComboBox cbx, string[] dataSource, string defaultVal, EventHandler h)
         {
             cbx.SelectedIndexChanged -= h;
@@ -211,31 +210,31 @@ namespace MQTTCSharpExample
 
         private string GetOutputSettings()
         {
-            if(cbOutputSine.Checked)
+            if (cbOutputSine.Checked)
             {
                 return $"Sine;{nudSineAmp.Value};{nudSineFreq.Value};{nudSineOffset.Value}";
             }
-            else if(cbOutputTriangle.Checked)
+            else if (cbOutputTriangle.Checked)
             {
                 return $"Triangle;{nudTriangleAmp.Value};{nudTriangleFreq.Value}";
             }
-            else if(cbOutputSquare.Checked)
+            else if (cbOutputSquare.Checked)
             {
                 return $"Square;{nudSquareAmp.Value};{nudSquareFreq.Value}";
             }
-            else if(cbOutputWhiteNoise.Checked)
+            else if (cbOutputWhiteNoise.Checked)
             {
                 return $"WhiteNoise;{nudWhiteNoiseRMS.Value}";
             }
-            else if(cbOutputPinkNoise.Checked)
+            else if (cbOutputPinkNoise.Checked)
             {
                 return $"PinkNoise;{nudPinkNoiseRMS.Value}";
             }
-            else if(cbOutputDC.Checked)
+            else if (cbOutputDC.Checked)
             {
                 return $"DC;{nudDCAmp.Value}";
             }
-            else if(cbOutputChirp.Checked)
+            else if (cbOutputChirp.Checked)
             {
                 return $"Chirp;{nudChirpAmp.Value};{nudChirpLowFreq.Value};{nudChirpHighFreq.Value};{nudChirpPercent.Value};{nudChirpPeriod.Value}";
             }
@@ -245,6 +244,22 @@ namespace MQTTCSharpExample
             }
         }
 
+        private void ShowNotConnectedStatus()
+        {
+            tsStatus.Text = $"{DateTime.Now} - No connection to broker, unable to publish message";
+            tsStatus.ForeColor= Color.Red;
+        }
+
+        private void ShowExceptionMessage(Exception ex)
+        {
+            tsStatus.Text = ex.ToString();
+            tsStatus.ForeColor = Color.Red;
+        }
+
+        private void ClearNotConnectedStatus()
+        {
+            tsStatus.Text = string.Empty;
+        }
 
         protected override void OnClosed(EventArgs e)
         {
@@ -259,6 +274,9 @@ namespace MQTTCSharpExample
                 btnConnect.Enabled = true;
                 tlpConnection.Enabled = true;
 
+                tsConnectionStatus.Text = "Disconnected";
+                tsConnectionStatus.ForeColor = Color.Red;
+                ClearNotConnectedStatus();
                 AppendMessage($"{DateTime.Now}-Client Disconnected {(sender as MqttClient)?.Options.ClientId}, {e.Reason}");
 
             }, CancellationToken.None, TaskCreationOptions.PreferFairness, UIScheduler);
@@ -299,6 +317,9 @@ namespace MQTTCSharpExample
                     btnDisconnect.Enabled = true;
                     btnConnect.Enabled = false;
                     tlpConnection.Enabled = false;
+                    tsConnectionStatus.Text = "Connected";
+                    tsConnectionStatus.ForeColor= Color.Green;
+                    ClearNotConnectedStatus();
                 }, CancellationToken.None, TaskCreationOptions.PreferFairness, UIScheduler);
             }
         }
@@ -306,7 +327,7 @@ namespace MQTTCSharpExample
         private async void OnClientApplicationMessageReceived(object sender, MQTTnet.MqttApplicationMessageReceivedEventArgs e)
         {
 
-            if(e.ApplicationMessage.Topic.EndsWith(AppTopics.TOPIC_APP_MESSAGE))
+            if (e.ApplicationMessage.Topic.EndsWith(AppTopics.TOPIC_APP_MESSAGE))
             {
                 AppendMessage($"{DateTime.Now}-Application Message Received with topic {e.ApplicationMessage.Topic}, Message is:{Encoding.UTF8.GetString(e.ApplicationMessage.Payload)}");
             }
@@ -314,8 +335,6 @@ namespace MQTTCSharpExample
             {
                 AppendMessage($"{DateTime.Now}-Application Message Received with topic {e.ApplicationMessage.Topic}, payload size {e.ApplicationMessage.Payload?.Length} Bytes");
             }
-
-            
 
 
             await Task.Factory.StartNew(() =>
@@ -408,7 +427,7 @@ namespace MQTTCSharpExample
                         lvTHStatus.EndUpdate();
                     }
                 }
-                else if(msg.Topic.EndsWith(THVTopics.TOPIC_THV_TEST_VT_STATUS))
+                else if (msg.Topic.EndsWith(THVTopics.TOPIC_THV_TEST_VT_STATUS))
                 {
                     var thvStatus = Utility.JsonDeserialize<MQTTVTStatus>(msg.Payload);
 
@@ -556,7 +575,6 @@ namespace MQTTCSharpExample
                         lvTests.EndUpdate();
                     }
                 }
-
                 else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_SIGNALS))
                 {
                     var app = Utility.JsonDeserialize<List<MQTTSignal>>(msg.Payload);
@@ -584,13 +602,13 @@ namespace MQTTCSharpExample
                         lvSignals.ItemChecked += OnSignalItemCheckChanged;
                     }
                 }
-                else if(msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_SIGNALPROPERTY))
+                else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_SIGNALPROPERTY))
                 {
                     var app = Utility.JsonDeserialize<List<MQTTSignalProperty>>(msg.Payload);
 
                     try
                     {
-                       
+
                         lvSignalProperty.BeginUpdate();
                         foreach (var kp in app)
                         {
@@ -598,17 +616,17 @@ namespace MQTTCSharpExample
 
                             foreach (ListViewItem lvi in lvSignalProperty.Items)
                             {
-                                if(lvi.Text == kp.SignalName)
+                                if (lvi.Text == kp.SignalName)
                                 {
                                     slvi = lvi;
                                     break;
                                 }
                             }
 
-                            if(slvi != null)
+                            if (slvi != null)
                             {
                                 if (kp.PropertyName == "RMS") slvi.SubItems[1].Text = kp.Value.ToString("f3");
-                                else if(kp.PropertyName == "Peak") slvi.SubItems[2].Text = kp.Value.ToString("f3");
+                                else if (kp.PropertyName == "Peak") slvi.SubItems[2].Text = kp.Value.ToString("f3");
                                 else if (kp.PropertyName == "PkPk") slvi.SubItems[3].Text = kp.Value.ToString("f3");
                                 else if (kp.PropertyName == "Min") slvi.SubItems[4].Text = kp.Value.ToString("f3");
                                 else if (kp.PropertyName == "Max") slvi.SubItems[5].Text = kp.Value.ToString("f3");
@@ -617,7 +635,7 @@ namespace MQTTCSharpExample
                             else
                             {
                                 slvi = new ListViewItem(kp.SignalName);
-                                slvi.SubItems.Add(new ListViewItem.ListViewSubItem(slvi, kp.PropertyName == "RMS" ? kp.Value.ToString("f3"):"0.000"));
+                                slvi.SubItems.Add(new ListViewItem.ListViewSubItem(slvi, kp.PropertyName == "RMS" ? kp.Value.ToString("f3") : "0.000"));
                                 slvi.SubItems.Add(new ListViewItem.ListViewSubItem(slvi, kp.PropertyName == "Peak" ? kp.Value.ToString("f3") : "0.000"));
                                 slvi.SubItems.Add(new ListViewItem.ListViewSubItem(slvi, kp.PropertyName == "PkPk" ? kp.Value.ToString("f3") : "0.000"));
                                 slvi.SubItems.Add(new ListViewItem.ListViewSubItem(slvi, kp.PropertyName == "Min" ? kp.Value.ToString("f3") : "0.000"));
@@ -625,18 +643,18 @@ namespace MQTTCSharpExample
                                 slvi.SubItems.Add(new ListViewItem.ListViewSubItem(slvi, kp.PropertyName == "Mean" ? kp.Value.ToString("f3") : "0.000"));
                                 slvi.SubItems.Add(new ListViewItem.ListViewSubItem(slvi, kp.Unit));
                                 lvSignalProperty.Items.Add(slvi);
-                            }                           
+                            }
                         }
 
                         var removeItems = new List<ListViewItem>();
-                        var names = app.Select(p=>p.SignalName).ToList(); 
+                        var names = app.Select(p => p.SignalName).ToList();
                         foreach (ListViewItem lvi in lvSignalProperty.Items)
                         {
                             if (!names.Contains(lvi.Text))
                                 removeItems.Add(lvi);
                         }
 
-                        foreach(ListViewItem lvi in removeItems)
+                        foreach (ListViewItem lvi in removeItems)
                         {
                             lvSignalProperty.Items.Remove(lvi);
                         }
@@ -808,10 +826,14 @@ namespace MQTTCSharpExample
                     }
                     catch (Exception ex)
                     {
+                        ShowExceptionMessage(ex);
                         Trace.WriteLine(ex);
                     }
                 }
-
+                else if (msg.Topic.EndsWith(GlobalParameterTopics.TOPIC_GLOBAL_PARAMETER_RESPONSE))
+                {
+                    ShowGlobalParameters();
+                }
 
             }, CancellationToken.None, TaskCreationOptions.PreferFairness, UIScheduler);
 
@@ -834,6 +856,141 @@ namespace MQTTCSharpExample
                 {
                     lvDetailStatus.EndUpdate();
                 }
+            }
+
+            void ShowGlobalParameters()
+            {
+                var msg = e.ApplicationMessage;
+
+                var obj = Utility.JsonDeserialize(msg.Payload);
+
+                if (obj is JObject jo)
+                {
+                    if (jo.TryGetValue("Item1", out var jtoken) && jtoken is JValue jv && jv.Value != null)
+                    {
+
+                        if (jv.Value.ToString() == CommandKey.ListGlobalParameters)
+                        {
+                            if (jo.TryGetValue("Item2", out var jtoken2) && jtoken2 is JArray ja)
+                            {
+                                try
+                                {
+                                    listViewGlobalParameters.BeginUpdate();
+                                    listViewGlobalParameters.Items.Clear();
+
+                                    foreach (dynamic item in ja)
+                                    {
+                                        var lvi = new ListViewItem(item.Value);
+                                        lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, String.Empty));
+                                        lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, String.Empty));
+                                        lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, String.Empty));
+                                        listViewGlobalParameters.Items.Add(lvi);
+                                    }
+                                }
+                                finally
+                                {
+                                    listViewGlobalParameters.EndUpdate();
+                                }
+                            }
+                        }
+                        else if (jo.TryGetValue("Item2", out var jp) && jp != null)
+                        {
+                            var key = jv.Value.ToString();
+                            var content = jp.ToString();
+                            rtbGlobalParameter.Text = content;
+                            dataGridView.DataSource = null;
+                            propertyGrid.SelectedObject = null;
+
+                            if (key.Contains(".Parameter."))
+                            {
+                                var p = Utility.JsonDeserialize<GParameter>(content);
+                                propertyGrid.SelectedObject = p;
+                            }
+                            else if (key.Contains(".Signal."))
+                            {
+                                var s = Utility.JsonDeserialize<GSignal>(content);
+                                propertyGrid.SelectedObject = s;
+
+
+                                try
+                                {
+                                    var dt = new DataTable();
+
+                                    //add table column
+                                    foreach (var f in s.Data)
+                                    {
+                                        var dc = new DataColumn(string.IsNullOrWhiteSpace(f.Unit) ? "Z axis" : $"{f.Quantity} ({f.Unit})");
+                                        dt.Columns.Add(dc);
+                                    }
+
+                                    //fill table rows
+                                    int max = s.Data.Max(fd => fd.Values.Length);
+
+                                    for (int i = 0; i < max; i++)
+                                    {
+                                        var dr = dt.NewRow();
+                                        object[] items = new object[s.Data.Count];
+
+                                        items[0] = s.Data[0].Values[i];
+                                        items[1] = s.Data[1].Values[i];
+                                        if (items.Length > 2 && i < s.Data[2].Values.Length)
+                                            items[2] = s.Data[2].Values[i];
+
+                                        dr.ItemArray = items;
+                                        dt.Rows.Add(dr);
+                                    }
+
+                                    dataGridView.DataSource = dt;
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    Trace.WriteLine(ex);
+                                }
+                            }
+                            else if (key.Contains(".NumericalValue."))
+                            {
+                                var n = Utility.JsonDeserialize<GNumeric>(content);
+                                propertyGrid.SelectedObject = n;
+
+                            }
+                            else if (key.Contains(".Table."))
+                            {
+                                var t = Utility.JsonDeserialize<GTable>(content);
+                                propertyGrid.SelectedObject = t;
+
+                                try
+                                {
+                                    var dt = new DataTable();
+
+                                    //add table column
+                                    foreach (var h in t.Headers)
+                                    {
+                                        var dc = new DataColumn(h.ToString());
+                                        dt.Columns.Add(dc);
+                                    }
+
+                                    //fill table rows
+                                    foreach (var r in t.Rows.Where(row=>row.Value != null))
+                                    {
+                                        var dr = dt.NewRow();
+                                        dr.ItemArray = r.Value.ToArray();
+                                        dt.Rows.Add(dr);
+                                    }
+
+                                    dataGridView.DataSource = dt;
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    Trace.WriteLine(ex);
+                                }
+
+                            }
+                        }
+                    }
+                }
+
             }
         }
 
@@ -901,6 +1058,10 @@ namespace MQTTCSharpExample
 
                 var topic = rbDSACommand.Checked || tabPageOutput == tabControlTest.SelectedTab ? DSATopics.TOPIC_DSA_TEST_COMMAND : VCSTopics.TOPIC_VCS_TEST_COMMAND;
 
+
+
+
+
                 if (btn == btnSetFrequency)
                 {
                     PublishWithValue(nudFrequency.Value);
@@ -917,15 +1078,15 @@ namespace MQTTCSharpExample
                 {
                     PublishWithValue($"{lblParameterName.Text};{tbParameterValue.Text}");
                 }
-                else if(btn == btnSetOutputIndex)
+                else if (btn == btnSetOutputIndex)
                 {
                     PublishWithValue((int)nudOutputIndex.Value);
                 }
-                else if(btn == btnRoRBandsOn || btn == btnRoRBandsOff)
+                else if (btn == btnRoRBandsOn || btn == btnRoRBandsOff)
                 {
                     PublishWithValue($"{Convert.ToInt32(rorBandFlag.Checked)};{tbRoRBands.Text}");
                 }
-                else if(btn == btnSORTonesOn || btn == btnSORTonesOff || btn == btnSORTonesHold || btn == btnSORTonesRelease || btn == btnSORTonesSweepDown || btn == btnSORTonesSweepUp)
+                else if (btn == btnSORTonesOn || btn == btnSORTonesOff || btn == btnSORTonesHold || btn == btnSORTonesRelease || btn == btnSORTonesSweepDown || btn == btnSORTonesSweepUp)
                 {
                     PublishWithValue($"{Convert.ToInt32(sorBandFlag.Checked)};{tbSoRTones.Text}");
                 }
@@ -935,21 +1096,21 @@ namespace MQTTCSharpExample
                 }
                 else if (btn == btnDeleteTest || btn == btnLoadTest)
                 {
-                    if(lvTests.SelectedItems.Count > 0)
+                    if (lvTests.SelectedItems.Count > 0)
                     {
                         PublishWithValue($"{lvTests.SelectedItems[0].Text}");
-                    }                   
+                    }
                 }
                 else if (btn == btnGetRecordFile)
                 {
-                    if(lvFiles.SelectedItems.Count > 0)
+                    if (lvFiles.SelectedItems.Count > 0)
                     {
                         PublishWithValue($"{lvFiles.SelectedItems[0].SubItems[1].Text}");
                     }
                 }
                 else if (btn == btnGetReport)
                 {
-                    if(lvReportFile.SelectedItems.Count > 0)
+                    if (lvReportFile.SelectedItems.Count > 0)
                     {
                         PublishWithValue($"{lvReportFile.SelectedItems[0].SubItems[1].Text}");
                     }
@@ -959,7 +1120,7 @@ namespace MQTTCSharpExample
                     PublishWithValue(tbReportTemplate.Text);
                 }
                 else if (btn == btnSetOutputParameters)
-                {                  
+                {
                     PublishWithValue(GetOutputSettings());
                 }
                 else
@@ -970,6 +1131,7 @@ namespace MQTTCSharpExample
 
                 async void PublishCommand()
                 {
+                    ClearNotConnectedStatus();
                     if (Client.IsConnected)
                     {
                         var options = new PublishOptionsModel()
@@ -982,11 +1144,14 @@ namespace MQTTCSharpExample
 
                         AppendPublishLog(topic, cmd);
                     }
+                    else 
+                        ShowNotConnectedStatus();
                 }
 
 
                 async void PublishWithValue(object val)
                 {
+                    ClearNotConnectedStatus();
                     if (Client.IsConnected)
                     {
                         var options = new PublishOptionsModel()
@@ -999,11 +1164,13 @@ namespace MQTTCSharpExample
 
                         AppendPublishLog(topic, $"{cmd};{val}");
                     }
+                    else
+                        ShowNotConnectedStatus();
                 }
             }
         }
 
-       
+
 
         private void OnSelectAll(object sender, EventArgs e)
         {
@@ -1056,6 +1223,8 @@ namespace MQTTCSharpExample
                 if (lvi?.Checked == true)
                     names = $"{names};{lvi.Text}";
 
+            ClearNotConnectedStatus();
+
             if (Client.IsConnected)
             {
                 var options = new PublishOptionsModel()
@@ -1068,6 +1237,8 @@ namespace MQTTCSharpExample
 
                 AppendPublishLog(AppTopics.TOPIC_APP_TEST_COMMAND, $"{CommandKey.RequestSignalData}{names}");
             }
+            else 
+                ShowNotConnectedStatus();
         }
 
 
@@ -1107,6 +1278,8 @@ namespace MQTTCSharpExample
         {
             if (!string.IsNullOrWhiteSpace(tbMessage.Text))
             {
+                ClearNotConnectedStatus();
+
                 if (Client.IsConnected)
                 {
                     var options = new PublishOptionsModel()
@@ -1119,6 +1292,8 @@ namespace MQTTCSharpExample
 
                     AppendPublishLog(AppTopics.TOPIC_APP_MESSAGE, tbMessage.Text);
                 }
+                else
+                    ShowNotConnectedStatus();
             }
         }
 
@@ -1129,7 +1304,14 @@ namespace MQTTCSharpExample
 
         private void AppendPublishLog(string topic, string payload)
         {
-            AppendMessage($"{DateTime.Now}-Publish Topic {Settings.Default.TopicPrefix}/{topic} with payload:{payload}");
+            if (string.IsNullOrWhiteSpace(payload))
+            {
+                AppendMessage($"{DateTime.Now}-Publish Topic {Settings.Default.TopicPrefix}/{topic} without payload");
+            }
+            else
+            {
+                AppendMessage($"{DateTime.Now}-Publish Topic {Settings.Default.TopicPrefix}/{topic} with payload:{payload}");
+            }
         }
 
         private void OnOutputTypeCheckedChanged(object sender, EventArgs e)
@@ -1146,8 +1328,130 @@ namespace MQTTCSharpExample
                 cbOutputs.ForEach(c => c.CheckedChanged += OnOutputTypeCheckedChanged);
             }
         }
+
+        private void OnBrowseProfile(object sender, EventArgs e)
+        {
+            using (var fileDialog = new OpenFileDialog())
+            {
+                fileDialog.Filter = "CSV Profile file|*.csv";
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (sender == btnBrowseRandomProfile)
+                        tbRandomProfilePath.Text = fileDialog.FileName;
+                    else if (sender == btnBrowseSineProfile)
+                        tbSineProfilePath.Text = fileDialog.FileName;
+                    else if (sender == btnBrowseShockProfile)
+                        tbShockProfilePath.Text = fileDialog.FileName;
+                    else if (sender == btnBrowseChannelTable)
+                        tbChannelTablePath.Text = fileDialog.FileName;
+                }
+            }
+        }
+
+        private async void OnSetProfile(object sender, EventArgs e)
+        {
+            try
+            {
+                ClearNotConnectedStatus();
+                string cmd = String.Empty, profile = String.Empty;
+                if (sender == btnSetRandomProfile)
+                {
+                    cmd = CommandKey.SetRandomProfile;
+                    profile = File.ReadAllText(tbRandomProfilePath.Text);
+                }
+                else if (sender == btnSetSineProfile)
+                {
+                    cmd = CommandKey.SetSineProfile;
+                    profile = File.ReadAllText(tbSineProfilePath.Text);
+                }
+                else if (sender == btnSetShockProfile)
+                {
+                    cmd = CommandKey.SetShockProfile;
+                    profile = File.ReadAllText(tbShockProfilePath.Text);
+                }
+                else if (sender == btnSetChannelTable)
+                {
+                    cmd = CommandKey.SetChannelTable;
+                    profile = File.ReadAllText(tbChannelTablePath.Text);
+                }
+
+                if (Client.IsConnected && !string.IsNullOrWhiteSpace(cmd) && !string.IsNullOrWhiteSpace(profile))
+                {
+                    var options = new PublishOptionsModel()
+                    {
+                        Topic = $"{Settings.Default.TopicPrefix}/{VCSTopics.TOPIC_VCS_TEST_COMMAND}",
+                        Retain = false,
+                        Payload = Encoding.UTF8.GetBytes($"{cmd};{profile}")
+                    };
+                    await Client.Publish(options);
+
+                    AppendPublishLog(VCSTopics.TOPIC_VCS_TEST_COMMAND, $"{cmd}");
+                }
+
+                if (!Client.IsConnected)
+                    ShowNotConnectedStatus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private async void OnListGlobalParameters(object sender, EventArgs e)
+        {
+            ClearNotConnectedStatus();
+            if (Client.IsConnected)
+            {
+                var options = new PublishOptionsModel()
+                {
+                    Topic = $"{Settings.Default.TopicPrefix}/{GlobalParameterTopics.TOPIC_GLOBAL_PARAMETER_REQUEST}",
+                    Retain = false,
+                    Payload = Encoding.UTF8.GetBytes(CommandKey.ListGlobalParameters),
+                };
+                await Client.Publish(options);
+                AppendPublishLog(options.Topic, String.Empty);
+            }
+            else
+                ShowNotConnectedStatus();
+
+
+        }
+
+        private async void OnGetGlobalParameter(object sender, EventArgs e)
+        {
+            ClearNotConnectedStatus();
+            var items = listViewGlobalParameters.SelectedItems;
+            if (Client.IsConnected && items?.Count > 0)
+            {
+                var options = new PublishOptionsModel()
+                {
+                    Topic = $"{Settings.Default.TopicPrefix}/{GlobalParameterTopics.TOPIC_GLOBAL_PARAMETER_REQUEST}",
+                    Retain = false,
+                    Payload = Encoding.UTF8.GetBytes(items[0].Text),
+                };
+                await Client.Publish(options);
+                AppendPublishLog(options.Topic, items[0].Text);
+            }
+
+            if(!Client.IsConnected)
+                ShowNotConnectedStatus();
+        }
+
+        private void OnGlobalParametersSelectedIndexChanged(object sender, EventArgs e)
+        {
+            OnGetGlobalParameter(sender, e);
+        }
+
+        private void OnCopyJsonContent(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(rtbGlobalParameter.Text))
+                return;
+
+            Clipboard.SetText(rtbGlobalParameter.Text);
+        }
     }
 
 
-    
+
 }

@@ -14,6 +14,7 @@ namespace MQTTCSharpExample
 {
     public static class Utility
     {
+        
         public static void EnableDoubleBuffer(this Control panel)
         {
             if (panel == null) return;
@@ -102,7 +103,7 @@ namespace MQTTCSharpExample
         public static string JsonSerializer<T>(T t)
         {
             try
-            {
+            {         
                 return JsonConvert.SerializeObject(t, jss);
             }
             catch (Exception ex)
@@ -137,6 +138,7 @@ namespace MQTTCSharpExample
 
         }
 
+        
         public static T JsonDeserialize<T>(byte[] payloadBuffer)
         {
             if (payloadBuffer != null)
@@ -144,6 +146,37 @@ namespace MQTTCSharpExample
                 return JsonDeserialize<T>(Encoding.UTF8.GetString(payloadBuffer));
             }
             return default;
+        }
+
+        public static object JsonDeserialize(byte[] payloadBuffer)
+        {
+            if (payloadBuffer != null)
+            {
+                return JsonDeserialize(Encoding.UTF8.GetString(payloadBuffer));
+            }
+            return default;
+        }
+
+
+        public static object JsonDeserialize(string jsonString)
+        {
+            object obj = default;
+
+            if (string.IsNullOrEmpty(jsonString))
+            {
+                return obj;
+            }
+
+            try
+            {
+                return JsonConvert.DeserializeObject(jsonString, jss);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.ToString());
+                return obj;
+            }
+
         }
 
 

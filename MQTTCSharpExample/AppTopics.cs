@@ -24,7 +24,12 @@ namespace MQTTCSharpExample
         public const string TOPIC_APP_TEST_SIGNALDATA = "App/Test/SignalData";
         public const string TOPIC_APP_TEST_SIGNALPROPERTY = "App/Test/SignalProperty";
         public const string TOPIC_APP_TEST_RUNFOLDER = "App/Test/RunFolder";
+    }
 
+    public static class GlobalParameterTopics
+    {
+        public const string TOPIC_GLOBAL_PARAMETER_REQUEST = "GlobalParameter/Request";
+        public const string TOPIC_GLOBAL_PARAMETER_RESPONSE = "GlobalParameter/Response";
     }
 
     public static class DSATopics
@@ -80,6 +85,9 @@ namespace MQTTCSharpExample
 
         public const string GenerateReport = nameof(GenerateReport);
         public const string SetParameter = nameof(SetParameter);
+
+        //global parameters
+        public const string ListGlobalParameters = nameof(ListGlobalParameters);
 
         //dsa
         public const string TriggerOn = nameof(TriggerOn);
@@ -140,7 +148,12 @@ namespace MQTTCSharpExample
         public const string SinglePulseOff = nameof(SinglePulseOff);
 
         public const string OutputSinglePulse = nameof(OutputSinglePulse);
-            
+
+        public const string SetChannelTable = nameof(SetChannelTable);
+        public const string SetRandomProfile = nameof(SetRandomProfile);
+        public const string SetSineProfile = nameof(SetSineProfile);
+        public const string SetShockProfile = nameof(SetShockProfile);
+
         //thv
     }
 

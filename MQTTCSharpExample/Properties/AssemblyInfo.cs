@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MQTTExample")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HP")]
+//[assembly: AssemblyCompany("HP")]
 [assembly: AssemblyProduct("MQTTExample")]
-[assembly: AssemblyCopyright("Copyright © HP 2021")]
+//[assembly: AssemblyCopyright("Copyright © HP 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

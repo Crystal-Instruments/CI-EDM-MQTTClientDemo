@@ -76,6 +76,9 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>CILogo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MQTTnet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -129,6 +132,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublishOptionsModel.cs" />
+    <Compile Include="Structs\GNumeric.cs" />
+    <Compile Include="Structs\GParameter.cs" />
+    <Compile Include="Structs\GSignal.cs" />
+    <Compile Include="Structs\GString.cs" />
+    <Compile Include="Structs\GTable.cs" />
     <Compile Include="Structs\MQTTAppStatus.cs" />
     <Compile Include="Structs\MQTTChannel.cs" />
     <Compile Include="Structs\MQTTDSATestStatus.cs" />
@@ -170,6 +178,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CILogo.ico" />
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
