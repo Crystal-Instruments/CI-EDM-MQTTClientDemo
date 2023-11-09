@@ -79,6 +79,26 @@
   <PropertyGroup>
     <ApplicationIcon>CILogo.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HSC|AnyCPU'">
+    <OutputPath>..\..\..\bin\AnyCPU\HSC\Spider\SocketMessage\MQTTExample\</OutputPath>
+    <DefineConstants>TRACE;CI</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HSC_STI|AnyCPU'">
+    <OutputPath>..\..\..\bin\AnyCPU\HSC_STI\Spider\SocketMessage\MQTTExample\</OutputPath>
+    <DefineConstants>TRACE;STI</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MQTTnet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -143,6 +163,7 @@
     <Compile Include="Structs\MQTTRecordStatus.cs" />
     <Compile Include="Structs\MQTTReportFile.cs" />
     <Compile Include="Structs\MQTTRunFolder.cs" />
+    <Compile Include="Structs\MQTTShakerData.cs" />
     <Compile Include="Structs\MQTTSignalFrameData.cs" />
     <Compile Include="Structs\MQTTSystemStatus.cs" />
     <Compile Include="Structs\MQTTTestStatus.cs" />

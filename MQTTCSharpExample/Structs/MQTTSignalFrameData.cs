@@ -16,6 +16,8 @@ namespace MQTTCSharpExample
         public string UnitZ;
         public ulong BlockSize;
         public double SamplingRate;
+        public string WindowType;
+        public string DisplayFormat;
     }
 
     public struct MQTTSignalFrameData
@@ -24,6 +26,11 @@ namespace MQTTCSharpExample
         public double[] ValueX;
         public double[] ValueY;
         public double[] ValueZ;
+
+        public int XSequenceType;//0-->linear,1-->log
+        public double XStart;
+        public double XDelta;
+        public int XLength;
     }
 
     public struct MQTTSignalProperty

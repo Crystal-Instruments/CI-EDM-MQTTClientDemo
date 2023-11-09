@@ -44,4 +44,18 @@ namespace MQTTCSharpExample
         public string Name;
         public string Flag;
     }
+
+    public struct MQTTAdvancedStatusCollection
+    {
+        public List<MQTTAdvancedStatus> AdvancedStatus;
+    }
+
+    public struct MQTTAdvancedStatus
+    {
+        public string Timestamp;
+        public string Name;
+        public string Type;
+        public string Value;
+        public string Unit;
+    }
 }

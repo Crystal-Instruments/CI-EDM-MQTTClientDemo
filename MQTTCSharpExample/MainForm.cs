@@ -29,10 +29,11 @@ namespace MQTTCSharpExample
             InitializeComponent();
             UIScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
-            var ctrls = new Control[] { tlpConnection, flpConnection ,lvDetailStatus,lvChannelTable,lvSystem,lvParameters,lvReportFile,lvSignals,lvSystem,lvTests,lvTHStatus,lvSignalProperty,
+            var ctrls = new Control[] { tlpConnection, flpConnection ,lvDetailStatus,lvChannelTable,lvSystem,lvShaker, lvParameters,lvReportFile,lvSignals,lvSystem,lvTests,lvTHStatus,lvSignalProperty,
                 tableLayoutPanel1,tableLayoutPanel2,tableLayoutPanel3,tableLayoutPanel4,tableLayoutPanel5,tableLayoutPanel6,tableLayoutPanel7,tableLayoutPanel8,tableLayoutPanel9,
                 tableLayoutPanel10,tableLayoutPanel11,tableLayoutPanel12,tableLayoutPanel13,tableLayoutPanel14,tableLayoutPanel15,tableLayoutPanel16,tableLayoutPanel17,rtbMessages,
                 tabControlTest,tabControlDemo,tableLayoutPanel18,flowLayoutPanel1,flowLayoutPanel2,flowLayoutPanel3,flowLayoutPanel4,flowLayoutPanel5,flowLayoutPanel6,flowLayoutPanel7,flowLayoutPanel8,flowLayoutPanel9,
+                tableLayoutPanel21,
             };
             ctrls.ToList().ForEach(c => c.EnableDoubleBuffer());
 
@@ -41,6 +42,10 @@ namespace MQTTCSharpExample
             Client.ClientApplicationMessageReceived += OnClientApplicationMessageReceived;
             Client.ClientConnected += OnClientConnected;
             Client.ClientDisconnected += OnClientDisconnected;
+
+//#if DEBUG
+            lblParameterName.Visible = btnSetParameter.Visible = tbParameterValue.Visible = btnListParameter.Visible = true;
+//#endif
         }
         void ShowSignals(List<MQTTSignalFrameData> app)
         {
@@ -62,6 +67,26 @@ namespace MQTTCSharpExample
                 for (int i = 0; i < app.Count; i++)
                 {
                     var sig = app[i];
+
+                    if (sig.XLength > 0)
+                    {
+                        sig.ValueX = new double[sig.XLength];
+                        sig.ValueX[0] = sig.XStart;
+                        if (sig.XSequenceType == 0)
+                        {
+                            for (int j = 1; j < sig.XLength; j++)
+                            {
+                                sig.ValueX[j] = sig.ValueX[j - 1] + sig.XDelta;
+                            }
+                        }
+                        else
+                        {
+                            for (int j = 1; j < sig.XLength; j++)
+                            {
+                                sig.ValueX[j] = sig.ValueX[j - 1] * sig.XDelta;
+                            }
+                        }
+                    }
 
                     if (sig.ValueX == null || sig.ValueY == null)
                     {
@@ -143,6 +168,8 @@ namespace MQTTCSharpExample
             cbxCreateTestType.DataSource = Utility.VCSTestTypes;
             tbFileDir.Text = tbReportDir.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             tbClientID.Text = $"EDM-MQTT-Example-Client-{Guid.NewGuid().ToString().ToUpper()}";
+            PeakValueHandler.TimeMatchOffset = (int)Settings.Default.TimestampMatchOffset;
+          
         }
         void LoadComboBoxSetting(ComboBox cbx, string[] dataSource, string defaultVal, EventHandler h)
         {
@@ -185,7 +212,7 @@ namespace MQTTCSharpExample
             Settings.Default.Save();
         }
 
-        private async void AppendMessage(string msg)
+        private async void AppendMessage(string msg,bool isError = false)
         {
             await Task.Factory.StartNew(() =>
             {
@@ -196,7 +223,17 @@ namespace MQTTCSharpExample
                         return;
 
                     rtbMessages.SuspendLayout();
-                    rtbMessages.AppendText(msg);
+                    if (isError)
+                    {
+                        rtbMessages.AppendText(msg);
+                        rtbMessages.Select(rtbMessages.TextLength - msg.Length, msg.Length);
+                        rtbMessages.SelectionColor = Color.Red;
+                    }
+                    else
+                    {
+                        rtbMessages.AppendText(msg);
+                    }
+
                     rtbMessages.AppendText(Environment.NewLine);
                     rtbMessages.ScrollToCaret();
                 }
@@ -284,7 +321,7 @@ namespace MQTTCSharpExample
 
         private async void OnClientConnected(object sender, MQTTnet.Client.Connecting.MqttClientConnectedEventArgs e)
         {
-            AppendMessage($"{DateTime.Now}-Client Connected {(sender as MqttClient)?.Options.ClientId}, {e.ConnectResult.ResultCode.ToString()}");
+            AppendMessage($"{DateTime.Now}-Client Connected {(sender as MqttClient)?.Options.ClientId}, {e.ConnectResult.ResultCode}");
 
             if (e.ConnectResult.ResultCode == MqttClientConnectResultCode.Success)
             {
@@ -327,13 +364,17 @@ namespace MQTTCSharpExample
         private async void OnClientApplicationMessageReceived(object sender, MQTTnet.MqttApplicationMessageReceivedEventArgs e)
         {
 
-            if (e.ApplicationMessage.Topic.EndsWith(AppTopics.TOPIC_APP_MESSAGE))
+            if (e.ApplicationMessage.Topic.EndsWith(AppTopics.TOPIC_APP_MESSAGE) )
             {
-                AppendMessage($"{DateTime.Now}-Application Message Received with topic {e.ApplicationMessage.Topic}, Message is:{Encoding.UTF8.GetString(e.ApplicationMessage.Payload)}");
+                AppendMessage($"{DateTime.Now}-Application message received with topic {e.ApplicationMessage.Topic}, message is:{Encoding.UTF8.GetString(e.ApplicationMessage.Payload)}");
+            }
+            else  if(e.ApplicationMessage.Topic.EndsWith(AppTopics.TOPIC_APP_ERROR))
+            {
+                AppendMessage($"{DateTime.Now}-Application error received with topic {e.ApplicationMessage.Topic}, error is:{Encoding.UTF8.GetString(e.ApplicationMessage.Payload)}",true);
             }
             else
             {
-                AppendMessage($"{DateTime.Now}-Application Message Received with topic {e.ApplicationMessage.Topic}, payload size {e.ApplicationMessage.Payload?.Length} Bytes");
+                AppendMessage($"{DateTime.Now}-Application data received with topic {e.ApplicationMessage.Topic}, payload size {e.ApplicationMessage.Payload?.Length} (bytes)");
             }
 
 
@@ -345,6 +386,7 @@ namespace MQTTCSharpExample
                     var app = Utility.JsonDeserialize<MQTTAppStatus>(msg.Payload);
                     lblName.Text = app.SoftwareMode;
                     lblVersion.Text = app.Version;
+                    rbDSACommand.Checked = app.SoftwareMode.Contains("DSA") || app.SoftwareMode.Contains("TDA") || app.SoftwareMode.Contains("RCM");
                 }
                 else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_SYSTEM_STATUS))
                 {
@@ -354,23 +396,23 @@ namespace MQTTCSharpExample
                 }
                 else if (msg.Topic.EndsWith(DSATopics.TOPIC_DSA_TEST_DSA_STATUS))
                 {
-                    ShowTestStatus(Utility.JsonDeserialize<MQTTDSATestStatus>(msg.Payload));
+                    ShowNameAndValue(Utility.JsonDeserialize<MQTTDSATestStatus>(msg.Payload));
                 }
                 else if (msg.Topic.EndsWith(VCSTopics.TOPIC_VCS_TEST_RANDOM_STATUS))
                 {
-                    ShowTestStatus(Utility.JsonDeserialize<MQTTRandomTestStatus>(msg.Payload));
+                    ShowNameAndValue(Utility.JsonDeserialize<MQTTRandomTestStatus>(msg.Payload));
                 }
                 else if (msg.Topic.EndsWith(VCSTopics.TOPIC_VCS_TEST_SINE_STATUS))
                 {
-                    ShowTestStatus(Utility.JsonDeserialize<MQTTSineTestStatus>(msg.Payload));
+                    ShowNameAndValue(Utility.JsonDeserialize<MQTTSineTestStatus>(msg.Payload));
                 }
                 else if (msg.Topic.EndsWith(VCSTopics.TOPIC_VCS_TEST_SHOCK_STATUS))
                 {
-                    ShowTestStatus(Utility.JsonDeserialize<MQTTShockTestStatus>(msg.Payload));
+                    ShowNameAndValue(Utility.JsonDeserialize<MQTTShockTestStatus>(msg.Payload));
                 }
                 else if (msg.Topic.EndsWith(VCSTopics.TOPIC_VCS_TEST_TWR_STATUS))
                 {
-                    ShowTestStatus(Utility.JsonDeserialize<MQTTTWRTestStatus>(msg.Payload));
+                    ShowNameAndValue(Utility.JsonDeserialize<MQTTTWRTestStatus>(msg.Payload));
                 }
                 else if (msg.Topic.EndsWith(THVTopics.TOPIC_THV_TEST_TH_STATUS))
                 {
@@ -506,6 +548,10 @@ namespace MQTTCSharpExample
                     }
 
                 }
+                else if(msg.Topic.EndsWith(VCSTopics.TOPIC_VCS_TEST_SHAKER))
+                {
+                    ShowNameAndValue(Utility.JsonDeserialize<MQTTShakerData>(msg.Payload),lvShaker);
+                }
                 else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_CHANNELS))
                 {
                     var app = Utility.JsonDeserialize<List<MQTTChannel>>(msg.Payload);
@@ -546,7 +592,17 @@ namespace MQTTCSharpExample
                         foreach (var kp in app)
                         {
                             var lvi = new ListViewItem(kp.Key);
-                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, kp.Value.ToString()));
+                            if(kp.Value != null)
+                            {
+                                lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, kp.Value.ToString()));
+                            }
+                            else
+                            {
+                                lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, "(null)"));
+                            }
+
+                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, GetParameterDescription(kp.Key)));
+
                             lvParameters.Items.Add(lvi);
                         }
                     }
@@ -684,6 +740,11 @@ namespace MQTTCSharpExample
 
                     ShowSignals(app);
                 }
+                else if(msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_COMPRESSED_SIGNALDATA))
+                {
+                    var app = Utility.JsonDeserialize<List<MQTTSignalFrameData>>(msg.Payload.DecompressByteArray());
+                    ShowSignals(app);
+                }
                 else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_RECORDSTATUS))
                 {
                     var app = Utility.JsonDeserialize<MQTTRecordStatus>(msg.Payload);
@@ -736,6 +797,37 @@ namespace MQTTCSharpExample
                         lvReportFile.EndUpdate();
                     }
 
+                }
+                else if(msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_REPORTTEMPLATES))
+                {
+                    var app = Utility.JsonDeserialize<MQTTReportTemplates>(msg.Payload);
+                    var preSelectedTemplate = string.Empty;
+                    if (cbxReportTemplates.SelectedItem != null)
+                    {
+                        preSelectedTemplate = cbxReportTemplates.SelectedItem.ToString();
+                    }
+                    cbxReportTemplates.Items.Clear();
+                    if(app.Templates?.Length > 0)
+                    {
+                        
+                        foreach(var t in app.Templates)
+                        {
+                            cbxReportTemplates.Items.Add(t);
+                        }
+
+                        if(string.IsNullOrEmpty(preSelectedTemplate))
+                        {
+                            if (cbxReportTemplates.Items.Count > 0)
+                            {
+                                cbxReportTemplates.SelectedIndex = 0;
+                            }
+                        }
+                        else
+                        {
+                            var idx = cbxReportTemplates.FindStringExact(preSelectedTemplate);
+                            if (idx > -1) cbxReportTemplates.SelectedIndex = idx;
+                        }
+                    }
                 }
                 else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_LIMITSTATUS))
                 {
@@ -830,31 +922,177 @@ namespace MQTTCSharpExample
                         Trace.WriteLine(ex);
                     }
                 }
+                else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_ADV_STATUS))
+                {
+                    var app = Utility.JsonDeserialize<MQTTAdvancedStatus>(msg.Payload);
+                    ShowFreqVSPeakChart(app);
+                }
+                else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_ERROR))
+                {
+                    MessageBox.Show(this, Encoding.UTF8.GetString(msg.Payload), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 else if (msg.Topic.EndsWith(GlobalParameterTopics.TOPIC_GLOBAL_PARAMETER_RESPONSE))
                 {
                     ShowGlobalParameters();
                 }
+               
 
             }, CancellationToken.None, TaskCreationOptions.PreferFairness, UIScheduler);
 
-            void ShowTestStatus(object ss)
+            void ShowFreqVSPeakChart(MQTTAdvancedStatus app)
             {
+                if (!ckbPFFV.Checked) return;
+
+                PeakValueHandler.Add(app);
+
+                if (app.Name == PeakValueHandler.PeakFrequency)
+                {
+                    if(float.TryParse(app.Value,out var freq))
+                    {
+                        tbPeakFreqValue.Text = $"{freq:f3}";
+                    }
+                    
+                    lblPeakFreqUnit.Text = $"{PeakValueHandler.UnitX}";
+                }
+                else if(app.Name == PeakValueHandler.PeakValue)
+                {
+                    if (float.TryParse(app.Value, out var pk))
+                    {
+                        tbPeakValue.Text = $"{pk:f5}";
+                    }
+                    lblPeakValueUnit.Text = $"{PeakValueHandler.UnitY}";
+                }
+                
+
+                var chart = this.zedGraphControl1;
+
+                if (chart.IsDisposed || chart.Disposing || !PeakValueHandler.HasData)
+                    return;
+
                 try
                 {
-                    lvDetailStatus.BeginUpdate();
-                    lvDetailStatus.Items.Clear();
+                 
+                    chart.SuspendLayout();
+
+                    //var title = string.Join(";", app.Select(s => s.Signal.Name).ToArray());
+
+                    chart.GraphPane.Title.Text = $"Peak vs Frequency";
+                    chart.GraphPane.Title.FontSpec.FontColor = Color.Black;
+                    chart.GraphPane.Title.FontSpec.IsBold = false;
+
+
+                    chart.GraphPane.XAxis.Title.Text = PeakValueHandler.UnitX;
+                    chart.GraphPane.YAxis.Title.Text = PeakValueHandler.UnitY;
+                    chart.GraphPane.XAxis.Type = AxisType.Log;
+                    chart.GraphPane.YAxis.Type = AxisType.Linear;
+
+                    chart.GraphPane.XAxis.MajorGrid.IsVisible = true;
+                    chart.GraphPane.XAxis.MinorGrid.IsVisible = true;
+                    chart.GraphPane.XAxis.Scale.Format = "f2";
+                    chart.GraphPane.XAxis.Scale.IsUseTenPower = false;
+                    chart.GraphPane.XAxis.Scale.MajorStepAuto = true;
+                    chart.GraphPane.XAxis.Scale.MinorStepAuto = true;
+                    chart.GraphPane.XAxis.Scale.Mag = 1;
+                    chart.GraphPane.XAxis.MinorTic.IsAllTics= true;
+                    chart.GraphPane.XAxis.MinorTic.IsInside = false;
+                    chart.GraphPane.XAxis.MinorTic.IsOpposite = false;
+                    chart.GraphPane.XAxis.MinorTic.IsOutside = true;
+
+                    //chart.GraphPane.XAxis.MajorTic.IsAllTics = true;
+                    //chart.GraphPane.XAxis.MinorTic.IsAllTics = true;
+
+
+
+                    chart.GraphPane.YAxis.MajorGrid.IsVisible = true;
+                    chart.GraphPane.YAxis.MinorGrid.IsVisible = true;
+
+                    var data = PeakValueHandler.GetData(ckbAutoRefresh.Checked);
+
+                    var xData = data[0];
+                    var yData = data[1];
+
+                    if (xData != null && yData != null && chart.GraphPane.CurveList.Count == 0)
+                    {
+                        chart.GraphPane.AddCurve("PeakVsFreq", xData, yData, Color.Blue, SymbolType.None);
+                        
+                        chart.GraphPane.XAxis.Scale.Min = 0;
+                        chart.GraphPane.XAxis.Scale.Max = 5000;
+                    }
+                    else
+                    {
+                        var lineItem = chart.GraphPane.CurveList[0] as LineItem;
+                        var ppl = lineItem.Points as PointPairList;
+
+                        if (ppl.Count == xData.Length && ppl.Count == yData.Length)
+                        {
+                            for (int i = 0; i < xData.Length; i++)
+                            {
+                                ppl[i].X = xData[i];
+                                ppl[i].Y = yData[i];
+                            }
+                        }
+                        else
+                        {
+                            ppl.Clear();
+                            ppl.Add(xData, yData);
+                        }
+
+                        //LineItem li = chart.GraphPane.
+                    }
+
+                    
+                    //chart.GraphPane.XAxis.Scale.MaxAuto = true;
+                    if(chart.GraphPane.ZoomStack.Count == 0)
+                    {
+                        chart.GraphPane.YAxis.Scale.MinAuto = true;
+                        chart.GraphPane.YAxis.Scale.MaxAuto = true;
+                        chart.GraphPane.AxisChange();
+                    }
+                   
+                    chart.Invalidate();
+
+                    if(ckbAutoRefresh.Checked)
+                    {
+                        try
+                        {
+                            dataGridViewFreqVsPeak.SuspendLayout();
+                            dataGridViewFreqVsPeak.DataSource = PeakValueHandler.GetTable();
+                        }
+                        finally
+                        {
+
+                            dataGridViewFreqVsPeak.ResumeLayout();
+                        }
+                    }
+                        
+
+                }
+                finally
+                {
+                    chart.ResumeLayout(true);
+                }
+            }
+
+            void ShowNameAndValue(object ss, ListView lv = null)
+            {
+                var lvStatus = lv ?? lvDetailStatus;
+
+                try
+                {
+                    lvStatus.BeginUpdate();
+                    lvStatus.Items.Clear();
 
 
                     foreach (var fi in ss.GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public))
                     {
                         var lvi = new ListViewItem(fi.Name.TrimStart('n', 'f', 'd'));
                         lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, fi.GetValue(ss).ToString()));
-                        lvDetailStatus.Items.Add(lvi);
+                        lvStatus.Items.Add(lvi);
                     }
                 }
                 finally
                 {
-                    lvDetailStatus.EndUpdate();
+                    lvStatus.EndUpdate();
                 }
             }
 
@@ -923,22 +1161,26 @@ namespace MQTTCSharpExample
                                         dt.Columns.Add(dc);
                                     }
 
-                                    //fill table rows
-                                    int max = s.Data.Max(fd => fd.Values.Length);
 
-                                    for (int i = 0; i < max; i++)
+                                    if(s.Data.Count > 0)
                                     {
-                                        var dr = dt.NewRow();
-                                        object[] items = new object[s.Data.Count];
+                                        //fill table rows
+                                        int min = s.Data.Min(fd => fd.Values.Length);
 
-                                        items[0] = s.Data[0].Values[i];
-                                        items[1] = s.Data[1].Values[i];
-                                        if (items.Length > 2 && i < s.Data[2].Values.Length)
-                                            items[2] = s.Data[2].Values[i];
+                                        for (int i = 0; i < min; i++)
+                                        {
+                                            var dr = dt.NewRow();
+                                            object[] items = new object[s.Data.Count];
 
-                                        dr.ItemArray = items;
-                                        dt.Rows.Add(dr);
-                                    }
+                                            items[0] = s.Data[0].Values[i];
+                                            items[1] = s.Data[1].Values[i];
+                                            if (items.Length > 2 && i < s.Data[2].Values.Length)
+                                                items[2] = s.Data[2].Values[i];
+
+                                            dr.ItemArray = items;
+                                            dt.Rows.Add(dr);
+                                        }
+                                    }                                    
 
                                     dataGridView.DataSource = dt;
 
@@ -991,6 +1233,26 @@ namespace MQTTCSharpExample
                     }
                 }
 
+            }
+        }
+
+        private string GetParameterDescription(string key)
+        {
+            //todo, add description here
+            switch(key)
+            {
+                case "DSA_OverlapRatio": return "0-->No overlap, 1-->As high as possible, 2-->25%, 3-->50%, etc.";
+                case "Average Type":
+                case "Average Mode": return "0-->Linear, 1-->Exponential, 2-->Peak hold";
+                case "Window Type": return "0-->Hanning, 1-->Hamming, 2-->Flattop, 3-->Uniform, etc.";
+                case "DSA_SampleRate_ID": return "0-->102.4KHz, 1-->81.92KHz, 2-->64KHz, 3--> 51.2KHz, etc.";
+                case "Block Size": return "256,512,1024,2048,4096,8192,16484,32768,65536";
+                case "DSA_FFTAverageOnOffFlag": return "0-->ON, 1-->OFF";
+                case "Octave Resolution": return "1-->1/1 oct, 3-->1/3 oct, 6-->1/6 oct, etc.";
+                case "octave Type": return "1-->1/1,2-->1/3,3-->1/6,4-->1/12,5-->1/24,6-->1/48";
+                case "Damping Ratio": return "0%~100%";
+                case "DSA_LowPassCutoffFreq": return "0~Fa";
+                default: return string.Empty;
             }
         }
 
@@ -1058,10 +1320,6 @@ namespace MQTTCSharpExample
 
                 var topic = rbDSACommand.Checked || tabPageOutput == tabControlTest.SelectedTab ? DSATopics.TOPIC_DSA_TEST_COMMAND : VCSTopics.TOPIC_VCS_TEST_COMMAND;
 
-
-
-
-
                 if (btn == btnSetFrequency)
                 {
                     PublishWithValue(nudFrequency.Value);
@@ -1117,7 +1375,7 @@ namespace MQTTCSharpExample
                 }
                 else if (btn == btnGenerateReport)
                 {
-                    PublishWithValue(tbReportTemplate.Text);
+                    PublishWithValue(cbxReportTemplates.Text);
                 }
                 else if (btn == btnSetOutputParameters)
                 {
@@ -1333,7 +1591,15 @@ namespace MQTTCSharpExample
         {
             using (var fileDialog = new OpenFileDialog())
             {
-                fileDialog.Filter = "CSV Profile file|*.csv";
+                if(sender == btnBrowseSchedule)
+                {
+                    fileDialog.Filter = "Schedule json file|*.sch";
+                }
+                else
+                {
+                    fileDialog.Filter = "CSV Profile file|*.csv";
+                }
+                
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     if (sender == btnBrowseRandomProfile)
@@ -1344,11 +1610,13 @@ namespace MQTTCSharpExample
                         tbShockProfilePath.Text = fileDialog.FileName;
                     else if (sender == btnBrowseChannelTable)
                         tbChannelTablePath.Text = fileDialog.FileName;
+                    else if (sender == btnBrowseSchedule)
+                        tbSchedulePath.Text = fileDialog.FileName;
                 }
             }
         }
 
-        private async void OnSetProfile(object sender, EventArgs e)
+        private async void OnAdvancedCommand(object sender, EventArgs e)
         {
             try
             {
@@ -1373,6 +1641,11 @@ namespace MQTTCSharpExample
                 {
                     cmd = CommandKey.SetChannelTable;
                     profile = File.ReadAllText(tbChannelTablePath.Text);
+                }
+                else if(sender == btnSetSchedule)
+                {
+                    cmd = CommandKey.SetSchedule;
+                    profile = File.ReadAllText(tbSchedulePath.Text);
                 }
 
                 if (Client.IsConnected && !string.IsNullOrWhiteSpace(cmd) && !string.IsNullOrWhiteSpace(profile))
@@ -1450,6 +1723,108 @@ namespace MQTTCSharpExample
 
             Clipboard.SetText(rtbGlobalParameter.Text);
         }
+
+        private async void OnPFFVCheckedChanged(object sender, EventArgs e)
+        {
+            if (!Client.IsConnected)
+            {
+                ShowNotConnectedStatus();
+                ckbPFFV.Checked = false;
+                return;
+            }
+
+            ClearNotConnectedStatus();
+
+            string cmdFreq, cmdVal;
+            if (ckbPFFV.Checked)
+            {
+                if (string.IsNullOrEmpty(tbPeakFreqSource.Text))
+                {
+                    return;
+                }
+
+                if(string.IsNullOrEmpty(tbPeakValueSource.Text))
+                {
+                    return;
+                }
+
+                PeakValueHandler.Clear();
+                this.zedGraphControl1.GraphPane.CurveList.Clear();
+                this.zedGraphControl1.AxisChange();
+                this.zedGraphControl1.Invalidate();
+
+                cmdFreq = $"{CommandKey.RequestPeakFrequency};On;{tbPeakFreqSource.Text}";
+                cmdVal = $"{CommandKey.RequestPeakValue};On;{tbPeakValueSource.Text}";               
+            }
+            else
+            {
+                cmdFreq = $"{CommandKey.RequestPeakFrequency};Off";
+                cmdVal = $"{CommandKey.RequestPeakValue};Off";
+                
+            }
+
+            var options = new PublishOptionsModel()
+            {
+                Topic = $"{Settings.Default.TopicPrefix}/{VCSTopics.TOPIC_VCS_TEST_COMMAND}",
+                Retain = false,
+                Payload = Encoding.UTF8.GetBytes(cmdFreq)   
+            };
+            await Client.Publish(options);
+
+            AppendPublishLog(VCSTopics.TOPIC_VCS_TEST_COMMAND, cmdFreq);
+
+
+            options = new PublishOptionsModel()
+            {
+                Topic = $"{Settings.Default.TopicPrefix}/{VCSTopics.TOPIC_VCS_TEST_COMMAND}",
+                Retain = false,
+                Payload = Encoding.UTF8.GetBytes(cmdVal)
+            };
+            await Client.Publish(options);
+
+            AppendPublishLog(VCSTopics.TOPIC_VCS_TEST_COMMAND, cmdVal);
+        }
+
+        private void OnTimestampMatchOffsetValueChanged(object sender, EventArgs e)
+        {
+            PeakValueHandler.TimeMatchOffset = (int)nudTimestampMatchOffset.Value;
+        }
+
+        private void OnExportFreqVsPeakClick(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dlg = new SaveFileDialog())
+            {
+                dlg.Filter = "CSV files(*.csv)|*.csv";
+                dlg.FileName = "PeakVsFreq";
+                if (dlg.ShowDialog(this.TopLevelControl) == DialogResult.OK)
+                {  
+                    Utility.ExportCSV(dlg.FileName, this.dataGridViewFreqVsPeak, out _,
+                         invariantCulture: true,excludeCol: ckbExcludedB.Checked?1:-1);
+                }
+            }
+        }
+
+        private void OnRefreshFreqVsPeakClick(object sender, EventArgs e)
+        {
+            try
+            {
+                dataGridViewFreqVsPeak.SuspendLayout();
+                PeakValueHandler.GetData(true);
+                dataGridViewFreqVsPeak.DataSource = PeakValueHandler.GetTable();
+            }
+            finally
+            {
+
+                dataGridViewFreqVsPeak.ResumeLayout();
+            }
+        }
+
+        private void OnResetFreqVsPeakClick(object sender, EventArgs e)
+        {
+            PeakValueHandler.Clear();
+            zedGraphControl1.GraphPane.CurveList.Clear();
+        }
+
     }
 
 

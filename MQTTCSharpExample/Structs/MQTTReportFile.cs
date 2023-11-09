@@ -11,4 +11,9 @@ namespace MQTTCSharpExample
         public string ReportName;
         public byte[] ReportContent;
     }
+
+    public struct MQTTReportTemplates
+    {
+        public string[] Templates;
+    }
 }

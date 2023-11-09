@@ -6,6 +6,7 @@ namespace MQTTCSharpExample
     {
         public const string TOPIC_APP_MESSAGE = "App/Message";
         public const string TOPIC_APP_STATUS = "App/Status";
+        public const string TOPIC_APP_ERROR = "App/Error";
 
         public const string TOPIC_APP_SYSTEM = "App/System";
         public const string TOPIC_APP_SYSTEM_STATUS = "App/System/Status";
@@ -17,13 +18,16 @@ namespace MQTTCSharpExample
         public const string TOPIC_APP_TEST_RECORDSTATUS = "App/Test/RecordStatus";
         public const string TOPIC_APP_TEST_LIST = "App/Test/List";
         public const string TOPIC_APP_TEST_REPORTFILE = "App/Test/ReportFile";
+        public const string TOPIC_APP_TEST_REPORTTEMPLATES = "App/Test/ReportTemplates";//d
         public const string TOPIC_APP_TEST_RECORDFILE = "App/Test/RecordFile";
         public const string TOPIC_APP_TEST_CHANNELS = "App/Test/Channels";
         public const string TOPIC_APP_TEST_PARAMETERS = "App/Test/Parameters";      
         public const string TOPIC_APP_TEST_SIGNALS = "App/Test/Signals";
         public const string TOPIC_APP_TEST_SIGNALDATA = "App/Test/SignalData";
+        public const string TOPIC_APP_TEST_COMPRESSED_SIGNALDATA = "App/Test/CompressedSignalData";
         public const string TOPIC_APP_TEST_SIGNALPROPERTY = "App/Test/SignalProperty";
         public const string TOPIC_APP_TEST_RUNFOLDER = "App/Test/RunFolder";
+        public const string TOPIC_APP_TEST_ADV_STATUS = "App/Test/AdvancedStatus";
     }
 
     public static class GlobalParameterTopics
@@ -42,6 +46,7 @@ namespace MQTTCSharpExample
     {
         public const string TOPIC_VCS_TEST_COMMAND = "VCS/Test/Command";
         public const string TOPIC_VCS_TEST_STAGE = "VCS/Test/Stage";
+        public const string TOPIC_VCS_TEST_SHAKER = "VCS/Test/Shaker";
         public const string TOPIC_VCS_TEST_CONTROL_UPDATED = "VCS/Test/ControlUpdated";
 
         public const string TOPIC_VCS_TEST_RANDOM_STATUS = "VCS/Test/RandomStatus";
@@ -153,8 +158,17 @@ namespace MQTTCSharpExample
         public const string SetRandomProfile = nameof(SetRandomProfile);
         public const string SetSineProfile = nameof(SetSineProfile);
         public const string SetShockProfile = nameof(SetShockProfile);
+        public const string SetSchedule = nameof(SetSchedule);
 
-        //thv
+        public const string RequestPeakFrequency = nameof(RequestPeakFrequency);
+        public const string RequestPeakValue = nameof(RequestPeakValue);
+
+        //Test Sequence (FAT)
+        public const string StartTestSequence = nameof(StartTestSequence);
+        public const string PauseTestSequence = nameof(PauseTestSequence);
+        public const string ResumeTestSequence = nameof(ResumeTestSequence);
+        public const string StopTestSequence = nameof(StopTestSequence);
+        public const string NextTestSequence = nameof(NextTestSequence);
     }
 
 }
