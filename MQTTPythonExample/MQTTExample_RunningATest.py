@@ -82,7 +82,7 @@ try:
         Y = Yvalues.split(",")
         Y = np.fromiter(Y, float)
 
-        Zvalues = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[1][3:-3]
+        Zvalues = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[1].split("XSequenceType")[0][3:-3]
         Z = Zvalues.split(",")
         Z = np.fromiter(Z, float)
 
