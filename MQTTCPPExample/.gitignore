@@ -1,2 +1,6 @@
 *.txt
 cmqtt
+Debug
+x64
+.git
+.vs
