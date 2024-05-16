@@ -15,31 +15,32 @@ class pubsub():
     Initialize method
     Set up variables, publisher, subscriber, topics, connect clients
     """
-    def __init__(self, brokerIP="127.0.0.1", port=1883, username='Admin', password='123456'): 
+    def __init__(self, brokerIP="127.0.0.1", port=1883, username='Admin', password='123456', prefix='EDM'): 
         
         # Setup variables that are common to pub and sub
         self.broker = brokerIP
         self.port = port
         self.username = username
         self.password = password
+        self.prefix = prefix
 
         # Setup publisher
-        self.pubgeneraltopic = "EDM/App/Test/Command"
-        self.pubVCStopic = "EDM/VCS/Test/Command"
-        self.pubDSAtopic = "EDM/DSA/Test/Command"
+        self.pubgeneraltopic = prefix + "/App/Test/Command"
+        self.pubVCStopic = prefix + "/VCS/Test/Command"
+        self.pubDSAtopic = prefix + "/DSA/Test/Command"
         self.pubclient_id = 'python publisher'
         
         # Setup subscriber
         # There can be multiple subscriber topics
-        self.subtopics = ["EDM/App/Test/SignalData",
-                          "EDM/VCS/Test/SineStatus",
-                          "EDM/App/Message",
-                          "EDM/DSA/Test/SignalData",
-                          "EDM/DSA/Test/DSAStatus",
-                          "EDM/App/System/Status",
-                          "EDM/App/System",
-                          "EDM/App/Status",
-                          "EDM/App/Test/Status"]
+        self.subtopics = [prefix + "/App/Test/SignalData",
+                          prefix + "/VCS/Test/SineStatus",
+                          prefix + "/App/Message",
+                          prefix + "/DSA/Test/SignalData",
+                          prefix + "/DSA/Test/DSAStatus",
+                          prefix + "/App/System/Status",
+                          prefix + "/App/System",
+                          prefix + "/App/Status",
+                          prefix + "/App/Test/Status"]
         
         self.subclient_id = 'python subscriber'
 
@@ -110,8 +111,8 @@ class pubsub():
   
         if not self.initLUT:
             try:
-                self.blocksize = int(self.LUT['EDM/App/Test/SignalData'].split("ValueX")[0].split("BlockSize")[1].split(",")[0][2:])
-                self.samplerate = float(self.LUT['EDM/App/Test/SignalData'].split("ValueX")[0].split("SamplingRate")[1].split(",")[0][2:-1])
+                self.blocksize = int(self.LUT[self.prefix + '/App/Test/SignalData'].split("ValueX")[0].split("BlockSize")[1].split(",")[0][2:])
+                self.samplerate = float(self.LUT[self.prefix + '/App/Test/SignalData'].split("ValueX")[0].split("SamplingRate")[1].split(",")[0][2:-1])
                 self.freqrange = self.samplerate * 0.44
                 self.freqresolution = self.samplerate / self.blocksize / 2
                 self.freqs = [i*self.freqresolution for i in range(self.blocksize)]
@@ -333,3 +334,8 @@ class pubsub():
         self.publish(self.pubgeneraltopic, 'RequestSignalData;Ch' + str(chan))
     
         
+    def get_2channel_data(self, chan, chan2):
+        '''
+        Get the time stream data of channel number 'chan'
+        '''
+        self.publish(self.pubgeneraltopic, 'RequestSignalData;Ch' + str(chan) + ';Ch' + str(chan2))

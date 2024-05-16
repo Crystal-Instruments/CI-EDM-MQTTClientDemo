@@ -13,17 +13,18 @@ import os
 import matplotlib.pyplot as plt
 
 # Connect to MQTT Broker
-mqttClient = mqtt.pubsub(brokerIP = "192.168.1.15")
+prefix = 'EDM'
+mqttClient = mqtt.pubsub(brokerIP = "192.168.1.15", prefix=prefix)
 mqttClient.subclient.loop_start()
 
 # initial sleep is needed to get system status messages
 time.sleep(2)
 
-softwareMode = mqttClient.LUT['EDM/App/Status'].split("SoftwareMode")[1].split(",")[0][3:-1]
-serialnumber = mqttClient.LUT['EDM/App/System'].split("SerialNumber")[1].split(",")[0][3:-1]
-devicetype   = mqttClient.LUT['EDM/App/System'].split("DeviceType")[1].split(",")[0][3:-1]
+softwareMode = mqttClient.LUT[prefix + '/App/Status'].split("SoftwareMode")[1].split(",")[0][3:-1]
+serialnumber = mqttClient.LUT[prefix + '/App/System'].split("SerialNumber")[1].split(",")[0][3:-1]
+devicetype   = mqttClient.LUT[prefix + '/App/System'].split("DeviceType")[1].split(",")[0][3:-1]
 
-testStatus = mqttClient.LUT['EDM/App/Test/Status'].split("Status")[1].split(",")[0][3:-1]
+testStatus = mqttClient.LUT[prefix + '/App/Test/Status'].split("Status")[1].split(",")[0][3:-1]
 
 signalFrame = []
 count = 0
@@ -41,19 +42,19 @@ try:
         plt.clf()
 
         ## Parsing the received message ##
-        signalName = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[0].split("Name")[1].split(",")[0][3:-1]
-        signalUnitX = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[0].split("UnitX")[1].split(",")[0][3:-1]
-        signalUnitY = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[0].split("UnitY")[1].split(",")[0][3:-1]
+        signalName = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[0].split("Name")[1].split(",")[0][3:-1]
+        signalUnitX = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[0].split("UnitX")[1].split(",")[0][3:-1]
+        signalUnitY = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[0].split("UnitY")[1].split(",")[0][3:-1]
 
-        Xvalues = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[0].split("ValueZ")[0][3:-3]
+        Xvalues = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[0].split("ValueZ")[0][3:-3]
         X = Xvalues.split(",")
         X = np.fromiter(X, float)
 
-        Yvalues = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[0][3:-3]
+        Yvalues = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[0][3:-3]
         Y = Yvalues.split(",")
         Y = np.fromiter(Y, float)
 
-        Zvalues = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[1].split("XSequenceType")[0][3:-3]
+        Zvalues = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[1].split("XSequenceType")[0][3:-3]
         Z = Zvalues.split(",")
         Z = np.fromiter(Z, float)
 
@@ -73,14 +74,15 @@ try:
 
         count += 1
         signalFrame = []
+        time.sleep(1) 
 
-        testStatus = mqttClient.LUT['EDM/App/Test/Status'].split("Status")[1].split(",")[0][3:-1]
+        testStatus = mqttClient.LUT[prefix + '/App/Test/Status'].split("Status")[1].split(",")[0][3:-1]
 
 except KeyboardInterrupt:
     print('Keyboard Interrupt received -- exiting main loop')
 
 # For any interruption from the python script, stop the test
-# mqttClient.stop()
+mqttClient.stop()
 
 try:
     mqttClient.subclient.loop_stop()

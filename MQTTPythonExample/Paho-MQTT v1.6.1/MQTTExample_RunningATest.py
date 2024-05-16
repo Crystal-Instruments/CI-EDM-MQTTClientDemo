@@ -13,7 +13,8 @@ import os
 import matplotlib.pyplot as plt
 
 # Connect to MQTT Broker
-mqttClient = mqtt.pubsub(brokerIP = "192.168.1.123")
+prefix = 'EDM'
+mqttClient = mqtt.pubsub(brokerIP = "192.168.1.15", prefix=prefix)
 mqttClient.subclient.loop_start()
 
 # initial sleep is needed to get system status messages
@@ -23,9 +24,9 @@ time.sleep(2)
 now = datetime.datetime.now()
 dt_string = now.strftime("%Y-%m-%d--%H-%M")
 
-softwareMode = mqttClient.LUT['EDM/App/Status'].split("SoftwareMode")[1].split(",")[0][3:-1]
-serialnumber = mqttClient.LUT['EDM/App/System'].split("SerialNumber")[1].split(",")[0][3:-1]
-devicetype   = mqttClient.LUT['EDM/App/System'].split("DeviceType")[1].split(",")[0][3:-1]
+softwareMode = mqttClient.LUT[prefix + '/App/Status'].split("SoftwareMode")[1].split(",")[0][3:-1]
+serialnumber = mqttClient.LUT[prefix + '/App/System'].split("SerialNumber")[1].split(",")[0][3:-1]
+devicetype   = mqttClient.LUT[prefix + '/App/System'].split("DeviceType")[1].split(",")[0][3:-1]
 
 savedirectory = softwareMode + "-" + devicetype + "-" + serialnumber + "-" + dt_string
 
@@ -40,6 +41,7 @@ if r == 1:
 
 # Connect and run a EDM test
 mqttClient.connect()
+time.sleep(2)
 mqttClient.run()
 
 r = input("\nPress enter once pre-test is done")
@@ -51,7 +53,7 @@ if r != '':
 mqttClient.proceed()
 time.sleep(2)
 
-testStatus = mqttClient.LUT['EDM/App/Test/Status'].split("Status")[1].split(",")[0][3:-1]
+testStatus = mqttClient.LUT[prefix + '/App/Test/Status'].split("Status")[1].split(",")[0][3:-1]
 
 signalFrame = []
 count = 0
@@ -70,25 +72,24 @@ try:
 
 
         ## Parsing the received message ##
-        signalName = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[0].split("Name")[1].split(",")[0][3:-1]
-        signalUnitX = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[0].split("UnitX")[1].split(",")[0][3:-1]
-        signalUnitY = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[0].split("UnitY")[1].split(",")[0][3:-1]
+        signalName = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[0].split("Name")[1].split(",")[0][3:-1]
+        signalUnitX = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[0].split("UnitX")[1].split(",")[0][3:-1]
+        signalUnitY = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[0].split("UnitY")[1].split(",")[0][3:-1]
 
-        Xvalues = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[0].split("ValueZ")[0][3:-3]
+        Xvalues = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[0].split("ValueZ")[0][3:-3]
         X = Xvalues.split(",")
         X = np.fromiter(X, float)
 
-        Yvalues = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[0][3:-3]
+        Yvalues = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[0][3:-3]
         Y = Yvalues.split(",")
         Y = np.fromiter(Y, float)
 
-        Zvalues = mqttClient.LUT['EDM/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[1].split("XSequenceType")[0][3:-3]
+        Zvalues = mqttClient.LUT[prefix + '/App/Test/SignalData'].split("ValueX")[1].split("ValueY")[1].split("ValueZ")[1].split("XSequenceType")[0][3:-3]
         Z = Zvalues.split(",")
         Z = np.fromiter(Z, float)
 
         signalFrame.append(X)
         signalFrame.append(Y)
-        signalFrame.append(Z)
 
         thd = np.array(signalFrame)
 
@@ -119,7 +120,7 @@ try:
         ## Generate plot ##
         # Adjust the X values for time domain signals
         # comment out for frequency domain signals
-        thd[0] = thd[0] - thd[2][0]
+        #thd[0] = thd[0] - Z
 
         plt.plot(thd[0], thd[1], 'r', label=signalName)
         plt.title("Signal Frame Data of " + signalName)
@@ -131,7 +132,7 @@ try:
 
         count += 1
         signalFrame = []
-        testStatus = mqttClient.LUT['EDM/App/Test/Status'].split("Status")[1].split(",")[0][3:-1]
+        testStatus = mqttClient.LUT[prefix + '/App/Test/Status'].split("Status")[1].split(",")[0][3:-1]
 
 except KeyboardInterrupt:
     print('Keyboard Interrupt received -- exiting main loop')
