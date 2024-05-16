@@ -17,6 +17,14 @@ mqttClient = EDM_mqtt_client(verbose=False, topic_prefix="EDM", client_id="pytho
 mqttClient.connect_mqtt()
 mqttClient.run()
 
+r = input("\nPress enter once pre-test is done")
+# any other key followed by enter will exit, or ctrl-c will exit
+if r != '':
+    exit()
+
+# Start test after pre-test
+mqttClient.proceed()
+
 signalFrame = []
 count = 0
 plt.ion()
