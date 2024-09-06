@@ -56,7 +56,7 @@ namespace sparkplugDemo
             while (!application.IsConnected) ;
 
             // Publish a command to the broker
-            Metric createTest = new Metric { Name = MetricNames.METRIC_NCMD_CREATETEST, DataType = DataType.String, StringValue = "dsgdsfdsfdsf;VCS_Random" };
+            Metric createTest = new Metric { Name = MetricNames.METRIC_NCMD_CREATETEST, DataType = DataType.String, StringValue = "SparkplugTest;VCS_Random" };
             application.PublishNodeCommand(new List<Metric> { createTest }, "EDM", "Node1");
             while (true) ;
         }
