@@ -13,68 +13,38 @@ import os
 import matplotlib.pyplot as plt
 
 # Connect to MQTT Broker
-mqttClient = EDM_mqtt_client(verbose=False, topic_prefix="EDM", client_id="python client", brokerIP="192.168.1.82")
+mqttClient = EDM_mqtt_client(client_id="python client", topic_prefix="EDM", brokerIP="192.168.1.15")
 mqttClient.connect_mqtt()
-mqttClient.run()
 
-r = input("\nPress enter once pre-test is done")
-# any other key followed by enter will exit, or ctrl-c will exit
-if r != '':
-    exit()
+while not mqttClient.connected:
+    pass
 
-# Start test after pre-test
-mqttClient.proceed()
+mqttClient.run_test()
 
-signalFrame = []
-count = 0
+# Wait until the test is running
+while mqttClient.status != 'Running':
+    pass
+
+# Turn on interactive plots
 plt.ion()
 
-try:
-    while mqttClient.LUT.get(mqttClient.topic_prefix + '/App/Test/Status', {'Status': 'Stopped'})['Status'] != "Running":
-        pass
+while mqttClient.status != 'Stopped':
+    # Get the most up-to-date signal data
+    mqttClient.request_signal_data('Ch1')
+    signal = mqttClient.signal_data[-1]
+    plt.clf()
+    X = signal['ValueX']
+    Y = signal['ValueY']
 
-    while mqttClient.LUT.get(mqttClient.topic_prefix + '/App/Test/Status', {'Status': 'Stopped'})['Status'] == "Running":
-        # Request signal data, such as Channel 1
-        mqttClient.get_channel_data(1)
-        # Wait for receiving and parsing message
-        #  Change time to receive data in real time or occasional updates
-        time.sleep(0.01)
-        # Refresh graph to view the current signal frame
-        # or comment it out to have a time history graph of the signal
-        plt.clf()
+    if len(X) != len(Y):
+        while len(X) > len(Y):
+            X.pop()
 
-        ## Parsing the received message ##
-        signalName = mqttClient.LUT[mqttClient.topic_prefix + '/App/Test/SignalData']["Signal"]["Name"]
-        signalUnitX = mqttClient.LUT[mqttClient.topic_prefix + '/App/Test/SignalData']["Signal"]["UnitX"]
-        signalUnitY = mqttClient.LUT[mqttClient.topic_prefix + '/App/Test/SignalData']["Signal"]["UnitY"]
-        Xvalues = mqttClient.LUT[mqttClient.topic_prefix + '/App/Test/SignalData']["ValueX"]
-        X = np.fromiter(Xvalues, float)
+        while len(Y) > len(X):
+            Y.pop()
 
-        Yvalues = mqttClient.LUT[mqttClient.topic_prefix + '/App/Test/SignalData']["ValueY"]
-        Y = np.fromiter(Yvalues, float)
+    plt.plot(X, Y)
+    plt.draw()
+    plt.pause(.001)
+    pass
 
-        Zvalues = mqttClient.LUT[mqttClient.topic_prefix + '/App/Test/SignalData']["ValueZ"]
-        Z = np.fromiter(Zvalues, float)
-
-        signalFrame.append(X)
-        signalFrame.append(Y)
-        # signalFrame.append(Z)
-
-        thd = np.array(signalFrame, dtype=object)
-        if thd[0].shape != thd[1].shape:
-            continue
-
-        plt.plot(thd[0], thd[1], 'r', label=signalName)
-        plt.title("Signal Frame Data of " + signalName)
-        plt.xlabel(signalUnitX)
-        plt.ylabel(signalUnitY)
-        plt.draw()
-        # plt.savefig(savedirectory + "/"+signalName+"-plot"+str(count)+".png")
-        plt.pause(0.001)
-
-        count += 1
-        signalFrame = []
-        time.sleep(.1)
-
-except KeyboardInterrupt:
-    print('Keyboard Interrupt received -- exiting main loop')
