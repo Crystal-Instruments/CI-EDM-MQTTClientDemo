@@ -12,10 +12,10 @@
       <Value Profile="(Default)">5000</Value>
     </Setting>
     <Setting Name="UserName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">admin</Value>
+      <Value Profile="(Default)">Admin</Value>
     </Setting>
     <Setting Name="Password" Type="System.String" Scope="User">
-      <Value Profile="(Default)">admin</Value>
+      <Value Profile="(Default)">123456</Value>
     </Setting>
     <Setting Name="KeepAliveTimeout" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">5000</Value>
@@ -37,6 +37,15 @@
     </Setting>
     <Setting Name="TimestampMatchOffset" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="CACertificateFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ClientCertificateFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ClientCertificatePrivateKeyFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
