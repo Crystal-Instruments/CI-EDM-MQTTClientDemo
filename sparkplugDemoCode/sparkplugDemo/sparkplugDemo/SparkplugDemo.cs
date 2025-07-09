@@ -9,21 +9,27 @@ using SparkplugNet.VersionB.Data;
 using SparkplugNet.Core.Application;
 using SparkplugNet.Core.Node;
 using SparkplugNet.Core.Enumerations;
-using MQTTnet;
 using SparkplugNet.Core;
-using MQTTnet.Internal;
+using MQTTnet.Client.Disconnecting;
+using System.CodeDom;
+using System.Threading;
+using System.Diagnostics;
+using MQTTnet.Client.Connecting;
+using Serilog.Formatting.Display;
+using MQTTnet;
+using Serilog;
 
 namespace sparkplugDemo
 {
     internal class SparkplugDemo
     {
-        private const string brokerAddress = "192.168.1.9";
+        private const string brokerAddress = "192.168.1.19";
         private const int brokerPort = 1883;
         private const string username = "Admin";
         private const string password = "123456";
         private const string clientId = "SparkplugDemo";
         private const bool useTls = false;
-        private const string scadaHostIdentifier = "Scada1";
+        private const string scadaHostIdentifier = "Scada2";
         private const string groupIdentifier = "EDM";
         private const string edgeNodeIdentifier = "EdgeNode1";
         private const bool isPrimaryApplication = true;
@@ -42,23 +48,97 @@ namespace sparkplugDemo
             foreach (Metric m in MetricNames.THVMetrics)
                 metrics.Add(m);
 
+
             // Creating the application with the metrics that it needs
             var application = new SparkplugApplication(metrics);
 
             // Specifying the address, port, and other options for the application
             var sparkplugApplicationOptions = new SparkplugApplicationOptions(brokerAddress, brokerPort, clientId,
-                username, password, useTls, scadaHostIdentifier, TimeSpan.FromSeconds(1), isPrimaryApplication,
+                username, password, useTls, scadaHostIdentifier, TimeSpan.MaxValue, isPrimaryApplication,
                 null, null, System.Threading.CancellationToken.None);
-            
+
+            application.OnDisconnected += ApplicationDisconnected;
             application.Start(sparkplugApplicationOptions);
 
-            // Waiting for the application to connect to the broker
+            //Wait for the application to connect
             while (!application.IsConnected) ;
 
-            // Publish a command to the broker
-            Metric createTest = new Metric { Name = MetricNames.METRIC_NCMD_CREATETEST, DataType = DataType.String, StringValue = "SparkplugTest;VCS_Random" };
-            application.PublishNodeCommand(new List<Metric> { createTest }, "EDM", "Node1");
-            while (true) ;
+            List<Tuple<string, Stopwatch>> metricsNamesToCheck = new List<Tuple<string, Stopwatch>>
+            {
+                Tuple.Create<string, Stopwatch>("Signals/Ch1/Data", new Stopwatch()),
+            };
+
+            List<Metric> metricsToCheck = new List<Metric>();
+            for (int i = 0; i < metricsNamesToCheck.Count; i++)
+            {
+                metricsToCheck.Add(null);
+            }
+
+            bool CheckMetricChanged(int index, string metricName)
+            {
+                Metric prev = metricsToCheck[index];
+                MetricState<Metric> gottenMetricState = null;
+                bool gotMetricState = application.NodeStates.TryGetValue(edgeNodeIdentifier, out gottenMetricState);
+                if (!gotMetricState || gottenMetricState == null)
+                {
+                    return false;
+                }
+                Metric gottenMetric = null;
+                bool gotMetric = gottenMetricState.Metrics.TryGetValue(metricName, out gottenMetric);
+                if (!gotMetric || gottenMetric == null)
+                {
+                    return false;
+                }
+
+                if (gottenMetric.Equals(prev))
+                {
+                    return false;
+                }
+
+                metricsToCheck[index] = gottenMetric;
+                return true;
+            }
+
+            Stopwatch secondTimer = new Stopwatch();
+            int dataReceivedInSecond = 0;
+            for (int i = 0; i < metricsToCheck.Count; i++)
+            {
+                metricsNamesToCheck[i].Item2.Start();
+            }
+            secondTimer.Start();
+            while (true)
+            {
+                for (int i = 0; i < metricsToCheck.Count; i++)
+                {
+                    Tuple<string, Stopwatch> tup = metricsNamesToCheck[i];
+                    if (CheckMetricChanged(i, tup.Item1))
+                    {
+                        tup.Item2.Stop();
+                        dataReceivedInSecond++;
+                        if (secondTimer.ElapsedMilliseconds >= 1000)
+                        {
+                            Console.Write(string.Format("Data In Second : {0}\n", dataReceivedInSecond));
+                            dataReceivedInSecond = 0;
+                            secondTimer.Restart();
+                        }
+                        Console.Write(string.Format("Elapsed Milliseconds: {0}, ", tup.Item2.ElapsedMilliseconds));
+                        if (metricsToCheck[i].DataSetValue.Rows.Count > 0 && metricsToCheck[i].DataSetValue.Rows[0].Elements.Count > 1)
+                        {
+                            Console.Write(string.Format("First Data Point: {0} of {1}\n", metricsToCheck[i].DataSetValue.Rows[0].Elements[1].DoubleValue, tup.Item1));
+                        }
+                        else
+                        {
+                            Console.Write("No Data\n");
+                        }
+                        tup.Item2.Restart();
+                    }
+                }
+            }
+        } 
+   
+        private static void ApplicationDisconnected(MqttClientDisconnectedEventArgs args)
+        {
+            Console.WriteLine("Disconnected");
         }
     }
 }
