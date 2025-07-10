@@ -135,7 +135,7 @@ namespace sparkplugDemo
             new Metric(){Name = METRIC_NCMD_SETREPORTNOTES, DataType =  (uint)DataType.String, StringValue = string.Empty},
             new Metric(){Name = METRIC_NCMD_SHUTDOWNPC, DataType =  (uint)DataType.String, StringValue = string.Empty},
             new Metric(){Name = METRIC_NCMD_SETNTP, DataType =  (uint)DataType.String, StringValue = string.Empty},
-          //new Metric(){Name = METRIC_NCMD_LISTGLOBALPARAMETERS, DataType =  (uint)DataType.Boolean, BooleanValue = false},
+            new Metric(){Name = METRIC_NCMD_LISTGLOBALPARAMETERS, DataType =  (uint)DataType.Boolean, BooleanValue = false},
             new Metric(){Name = METRIC_NCMD_SETINPUTRANGE, DataType =  (uint)DataType.Int32, IntValue = 0},
             new Metric(){Name = METRIC_NCMD_STARTTESTSEQUENCE, DataType =  (uint)DataType.Boolean, BooleanValue = false},
             new Metric(){Name = METRIC_NCMD_PAUSETESTSEQUENCE, DataType =  (uint)DataType.Boolean, BooleanValue = false},
