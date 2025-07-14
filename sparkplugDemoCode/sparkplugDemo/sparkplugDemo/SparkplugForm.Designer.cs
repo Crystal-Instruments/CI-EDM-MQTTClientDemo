@@ -48,7 +48,6 @@
             this.btnResumeTestSequence = new DevComponents.DotNetBar.ButtonX();
             this.btnStopTestSequence = new DevComponents.DotNetBar.ButtonX();
             this.tbCommand = new DevComponents.DotNetBar.SuperTabItem();
-            this.tbParameters = new DevComponents.DotNetBar.SuperTabItem();
             this.tbTest = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.panelEx7 = new DevComponents.DotNetBar.PanelEx();
@@ -73,6 +72,8 @@
             this.btnConnectClient = new DevComponents.DotNetBar.ButtonX();
             this.btnDisconnectClient = new DevComponents.DotNetBar.ButtonX();
             this.tbClientSettings = new DevComponents.DotNetBar.SuperTabItem();
+            this.tbParameters = new DevComponents.DotNetBar.SuperTabItem();
+            this.btnChangeEdgeNode = new DevComponents.DotNetBar.ButtonX();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
@@ -193,6 +194,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnPauseTestSequence, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.btnResumeTestSequence, 3, 3);
             this.tableLayoutPanel1.Controls.Add(this.btnStopTestSequence, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnChangeEdgeNode, 0, 19);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -394,12 +396,6 @@
             this.tbCommand.GlobalItem = false;
             this.tbCommand.Name = "tbCommand";
             this.tbCommand.Text = "Command";
-            // 
-            // tbParameters
-            // 
-            this.tbParameters.GlobalItem = false;
-            this.tbParameters.Name = "tbParameters";
-            this.tbParameters.Text = "Global Parameters";
             // 
             // tbTest
             // 
@@ -781,6 +777,24 @@
             this.tbClientSettings.Name = "tbClientSettings";
             this.tbClientSettings.Text = "Sparkplug";
             // 
+            // tbParameters
+            // 
+            this.tbParameters.GlobalItem = false;
+            this.tbParameters.Name = "tbParameters";
+            this.tbParameters.Text = "Global Parameters";
+            // 
+            // btnChangeEdgeNode
+            // 
+            this.btnChangeEdgeNode.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnChangeEdgeNode.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnChangeEdgeNode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnChangeEdgeNode.Location = new System.Drawing.Point(3, 744);
+            this.btnChangeEdgeNode.Name = "btnChangeEdgeNode";
+            this.btnChangeEdgeNode.Size = new System.Drawing.Size(171, 40);
+            this.btnChangeEdgeNode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnChangeEdgeNode.TabIndex = 17;
+            this.btnChangeEdgeNode.Text = "Change Edge Node";
+            // 
             // SparkplugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -853,5 +867,6 @@
         private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel3;
         private DevComponents.DotNetBar.SuperTabItem tbCommand;
         private DevComponents.DotNetBar.SuperTabItem tbParameters;
+        private DevComponents.DotNetBar.ButtonX btnChangeEdgeNode;
     }
 }

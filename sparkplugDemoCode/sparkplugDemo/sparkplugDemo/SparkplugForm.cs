@@ -18,12 +18,16 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Threading;
 using System.Diagnostics;
 using DevComponents.DotNetBar;
+using MQTTnet.Client.Disconnecting;
+using MQTTnet.Client.Connecting;
+using System.Web.UI.Design;
 
 namespace sparkplugDemo
 {
     public partial class SparkplugForm : Form
     {
         private SparkplugApplication application;
+        private const string setCommandNodeInstructions = "Set Command Node Id Using TextBox Below";
 
         private string BrokerAddress {
             get { return ipAddressInput1.Value; }
@@ -74,8 +78,9 @@ namespace sparkplugDemo
         }
 
         private string CommandNodeId
-        { 
-            get { return "EdgeNode1"; }
+        {
+            get;
+            set;
         }
 
         private List<Metric> applicationMetrics;
@@ -103,6 +108,18 @@ namespace sparkplugDemo
                 ApplicationMetrics.Add(m);
         }
 
+        private void OnConnected(MqttClientConnectedEventArgs args)
+        {
+            Console.WriteLine("Connected");
+            SetConnectedState();
+        }
+
+        private void OnDisconnected(MqttClientDisconnectedEventArgs args)
+        {
+            Console.WriteLine("Disconnected");
+            SetDisconnectedState();
+        }
+
         private void HookEvents(bool hook)
         {
             if (hook)
@@ -122,6 +139,7 @@ namespace sparkplugDemo
                 btnPauseTestSequence.Click += OnButtonClicked;
                 btnResumeTestSequence.Click += OnButtonClicked;
                 btnStopTestSequence.Click += OnButtonClicked;
+                btnChangeEdgeNode.Click += OnChangeEdgeNodeClicked;
             }
             else
             {
@@ -139,6 +157,24 @@ namespace sparkplugDemo
                 btnPauseTestSequence.Click -= OnButtonClicked;
                 btnResumeTestSequence.Click -= OnButtonClicked;
                 btnStopTestSequence.Click -= OnButtonClicked;
+                btnChangeEdgeNode.Click -= OnChangeEdgeNodeClicked;
+            }
+        }
+
+        private void OnChangeEdgeNodeClicked(object sender, EventArgs e)
+        {
+            ButtonX btnSender = sender as ButtonX;
+            if (btnSender == null)
+            {
+                return;
+            }
+            using (ChangeCommandEdgeNodeForm frm = new ChangeCommandEdgeNodeForm(CommandNodeId, setCommandNodeInstructions))
+            {
+                frm.ShowDialog(this);
+                if (frm.DialogResult == DialogResult.OK)
+                {
+                    CommandNodeId = frm.NewCommandEdgeNode;
+                }
             }
         }
 
@@ -178,6 +214,22 @@ namespace sparkplugDemo
             if (btnSender == null || btnSender.Tag == null || !application.IsConnected)
             {
                 return;
+            }
+
+            if (string.IsNullOrEmpty(CommandNodeId))
+            {
+                using (ChangeCommandEdgeNodeForm frm = new ChangeCommandEdgeNodeForm("", setCommandNodeInstructions))
+                {
+                    frm.ShowDialog(this);
+                    if (frm.DialogResult == DialogResult.OK)
+                    {
+                        CommandNodeId = frm.NewCommandEdgeNode;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
             }
 
             try
@@ -234,22 +286,51 @@ namespace sparkplugDemo
 
         private void SetConnectedState() 
         {
-            btnConnectClient.Enabled = false;
-            btnDisconnectClient.Enabled = true;
+            if (btnConnectClient.InvokeRequired)
+            {
+                btnConnectClient.Invoke(new Action(() => btnConnectClient.Enabled = false));
+            }
+            else
+            {
+                btnConnectClient.Enabled = false;
+            }
+            if (btnDisconnectClient.InvokeRequired)
+            {
+                btnDisconnectClient.Invoke(new Action(() => btnDisconnectClient.Enabled = true));
+            }
+            else
+            {
+                btnDisconnectClient.Enabled = true;
+            }
         }
 
         private void SetDisconnectedState()
         {
-            btnConnectClient.Enabled = true;
-            btnDisconnectClient.Enabled = false;
+            if (btnConnectClient.InvokeRequired)
+            {
+                btnConnectClient.Invoke(new Action(() => btnConnectClient.Enabled = true));
+            }
+            else
+            {
+                btnConnectClient.Enabled = true;
+            }
+            if (btnDisconnectClient.InvokeRequired)
+            {
+                btnDisconnectClient.Invoke(new Action(() => btnDisconnectClient.Enabled = false));
+            }
+            else
+            {
+                btnDisconnectClient.Enabled = false;
+            }
         }
 
         private void btnConnectClient_Click(object sender, EventArgs e)
         {
             try
             {
-                SetConnectedState();
                 application = new SparkplugApplication(ApplicationMetrics);
+                            application.OnDisconnected += OnDisconnected;
+            application.OnConnected += OnConnected;
 
                 CancellationTokenSource tokenSrc = new CancellationTokenSource();
                 CancellationToken ct = tokenSrc.Token;
