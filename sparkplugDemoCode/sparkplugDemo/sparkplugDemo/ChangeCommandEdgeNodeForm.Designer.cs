@@ -93,7 +93,7 @@
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "Cnacel";
+            this.btnCancel.Text = "Cancel";
             // 
             // lblInstructions
             // 

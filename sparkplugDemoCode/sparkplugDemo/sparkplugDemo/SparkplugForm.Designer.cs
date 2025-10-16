@@ -47,6 +47,7 @@
             this.btnPauseTestSequence = new DevComponents.DotNetBar.ButtonX();
             this.btnResumeTestSequence = new DevComponents.DotNetBar.ButtonX();
             this.btnStopTestSequence = new DevComponents.DotNetBar.ButtonX();
+            this.btnChangeEdgeNode = new DevComponents.DotNetBar.ButtonX();
             this.tbCommand = new DevComponents.DotNetBar.SuperTabItem();
             this.tbTest = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
@@ -73,7 +74,6 @@
             this.btnDisconnectClient = new DevComponents.DotNetBar.ButtonX();
             this.tbClientSettings = new DevComponents.DotNetBar.SuperTabItem();
             this.tbParameters = new DevComponents.DotNetBar.SuperTabItem();
-            this.btnChangeEdgeNode = new DevComponents.DotNetBar.ButtonX();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
@@ -389,6 +389,18 @@
             this.btnStopTestSequence.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.btnStopTestSequence.TabIndex = 16;
             this.btnStopTestSequence.Text = "Stop Test Sequence";
+            // 
+            // btnChangeEdgeNode
+            // 
+            this.btnChangeEdgeNode.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnChangeEdgeNode.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnChangeEdgeNode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnChangeEdgeNode.Location = new System.Drawing.Point(3, 744);
+            this.btnChangeEdgeNode.Name = "btnChangeEdgeNode";
+            this.btnChangeEdgeNode.Size = new System.Drawing.Size(171, 40);
+            this.btnChangeEdgeNode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnChangeEdgeNode.TabIndex = 17;
+            this.btnChangeEdgeNode.Text = "Change Edge Node";
             // 
             // tbCommand
             // 
@@ -783,18 +795,6 @@
             this.tbParameters.Name = "tbParameters";
             this.tbParameters.Text = "Global Parameters";
             // 
-            // btnChangeEdgeNode
-            // 
-            this.btnChangeEdgeNode.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnChangeEdgeNode.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnChangeEdgeNode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnChangeEdgeNode.Location = new System.Drawing.Point(3, 744);
-            this.btnChangeEdgeNode.Name = "btnChangeEdgeNode";
-            this.btnChangeEdgeNode.Size = new System.Drawing.Size(171, 40);
-            this.btnChangeEdgeNode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnChangeEdgeNode.TabIndex = 17;
-            this.btnChangeEdgeNode.Text = "Change Edge Node";
-            // 
             // SparkplugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -802,7 +802,7 @@
             this.ClientSize = new System.Drawing.Size(1064, 837);
             this.Controls.Add(this.tabControl1);
             this.Name = "SparkplugForm";
-            this.Text = "SparkplugForm";
+            this.Text = "MQTT Sparkplug Demo";
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.superTabControlPanel2.ResumeLayout(false);
