@@ -1,5 +1,4 @@
-﻿using DevComponents.DotNetBar;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -51,7 +50,7 @@ namespace sparkplugDemo
 
         private void OnBtnCancelClicked(object sender, EventArgs e)
         {
-            ButtonX btnSender = sender as ButtonX;
+            Button btnSender = sender as Button;
             if (btnSender == null)
             {
                 return;
@@ -61,7 +60,7 @@ namespace sparkplugDemo
 
         private void OnBtnOkClicked(object sender, EventArgs e)
         {
-            ButtonX btnSender = sender as ButtonX;
+            Button btnSender = sender as Button;
             if (btnSender == null)
             {
                 return;

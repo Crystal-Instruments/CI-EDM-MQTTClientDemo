@@ -28,109 +28,93 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblCurrentEdgeNode = new DevComponents.DotNetBar.LabelX();
-            this.lblChangeEdgeNode = new DevComponents.DotNetBar.LabelX();
-            this.tbNewEdgeNodeName = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.btnOk = new DevComponents.DotNetBar.ButtonX();
-            this.btnCancel = new DevComponents.DotNetBar.ButtonX();
-            this.lblInstructions = new DevComponents.DotNetBar.LabelX();
+            this.lblInstructions = new System.Windows.Forms.Label();
+            this.lblCurrentEdgeNode = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbNewEdgeNodeName = new System.Windows.Forms.TextBox();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOk = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // lblCurrentEdgeNode
-            // 
-            // 
-            // 
-            // 
-            this.lblCurrentEdgeNode.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.lblCurrentEdgeNode.Location = new System.Drawing.Point(12, 65);
-            this.lblCurrentEdgeNode.Name = "lblCurrentEdgeNode";
-            this.lblCurrentEdgeNode.Size = new System.Drawing.Size(112, 23);
-            this.lblCurrentEdgeNode.TabIndex = 0;
-            this.lblCurrentEdgeNode.Text = "Current Edge Node: ";
-            // 
-            // lblChangeEdgeNode
-            // 
-            // 
-            // 
-            // 
-            this.lblChangeEdgeNode.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.lblChangeEdgeNode.Location = new System.Drawing.Point(12, 114);
-            this.lblChangeEdgeNode.Name = "lblChangeEdgeNode";
-            this.lblChangeEdgeNode.Size = new System.Drawing.Size(166, 23);
-            this.lblChangeEdgeNode.TabIndex = 1;
-            this.lblChangeEdgeNode.Text = "Edge Node To Send Commands: ";
-            // 
-            // tbNewEdgeNodeName
-            // 
-            // 
-            // 
-            // 
-            this.tbNewEdgeNodeName.Border.Class = "TextBoxBorder";
-            this.tbNewEdgeNodeName.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbNewEdgeNodeName.Location = new System.Drawing.Point(187, 114);
-            this.tbNewEdgeNodeName.Name = "tbNewEdgeNodeName";
-            this.tbNewEdgeNodeName.PreventEnterBeep = true;
-            this.tbNewEdgeNodeName.Size = new System.Drawing.Size(185, 20);
-            this.tbNewEdgeNodeName.TabIndex = 2;
-            // 
-            // btnOk
-            // 
-            this.btnOk.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnOk.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnOk.Location = new System.Drawing.Point(306, 185);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnOk.TabIndex = 3;
-            this.btnOk.Text = "Ok";
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnCancel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnCancel.Location = new System.Drawing.Point(225, 185);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "Cancel";
             // 
             // lblInstructions
             // 
-            // 
-            // 
-            // 
-            this.lblInstructions.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.lblInstructions.Location = new System.Drawing.Point(12, 25);
+            this.lblInstructions.AutoSize = true;
+            this.lblInstructions.Location = new System.Drawing.Point(16, 41);
             this.lblInstructions.Name = "lblInstructions";
-            this.lblInstructions.Size = new System.Drawing.Size(360, 23);
-            this.lblInstructions.TabIndex = 5;
+            this.lblInstructions.Size = new System.Drawing.Size(67, 13);
+            this.lblInstructions.TabIndex = 6;
             this.lblInstructions.Text = "Instructions: ";
+            // 
+            // lblCurrentEdgeNode
+            // 
+            this.lblCurrentEdgeNode.AutoSize = true;
+            this.lblCurrentEdgeNode.Location = new System.Drawing.Point(16, 85);
+            this.lblCurrentEdgeNode.Name = "lblCurrentEdgeNode";
+            this.lblCurrentEdgeNode.Size = new System.Drawing.Size(104, 13);
+            this.lblCurrentEdgeNode.TabIndex = 7;
+            this.lblCurrentEdgeNode.Text = "Current Edge Node: ";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 128);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(166, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Edge Node To Send Commands: ";
+            // 
+            // tbNewEdgeNodeName
+            // 
+            this.tbNewEdgeNodeName.Location = new System.Drawing.Point(188, 125);
+            this.tbNewEdgeNodeName.Name = "tbNewEdgeNodeName";
+            this.tbNewEdgeNodeName.Size = new System.Drawing.Size(193, 20);
+            this.tbNewEdgeNodeName.TabIndex = 9;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(225, 185);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 10;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnOk
+            // 
+            this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOk.Location = new System.Drawing.Point(306, 185);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 11;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
             // 
             // ChangeCommandEdgeNodeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 211);
-            this.Controls.Add(this.lblInstructions);
-            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.tbNewEdgeNodeName);
-            this.Controls.Add(this.lblChangeEdgeNode);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.lblCurrentEdgeNode);
+            this.Controls.Add(this.lblInstructions);
             this.Name = "ChangeCommandEdgeNodeForm";
+            this.ShowIcon = false;
             this.Text = "Change Edge Node";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private DevComponents.DotNetBar.LabelX lblCurrentEdgeNode;
-        private DevComponents.DotNetBar.LabelX lblChangeEdgeNode;
-        private DevComponents.DotNetBar.Controls.TextBoxX tbNewEdgeNodeName;
-        private DevComponents.DotNetBar.ButtonX btnOk;
-        private DevComponents.DotNetBar.ButtonX btnCancel;
-        private DevComponents.DotNetBar.LabelX lblInstructions;
+        private System.Windows.Forms.Label lblInstructions;
+        private System.Windows.Forms.Label lblCurrentEdgeNode;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbNewEdgeNodeName;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnOk;
     }
 }

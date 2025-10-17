@@ -28,148 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new DevComponents.DotNetBar.SuperTabControl();
-            this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
-            this.superTabControlPanel3 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnConnect = new DevComponents.DotNetBar.ButtonX();
-            this.btnDisconnect = new DevComponents.DotNetBar.ButtonX();
-            this.btnRun = new DevComponents.DotNetBar.ButtonX();
-            this.btnPause = new DevComponents.DotNetBar.ButtonX();
-            this.btnStop = new DevComponents.DotNetBar.ButtonX();
-            this.btnContinue = new DevComponents.DotNetBar.ButtonX();
-            this.btnStartRecord = new DevComponents.DotNetBar.ButtonX();
-            this.btnStopRecord = new DevComponents.DotNetBar.ButtonX();
-            this.btnSaveSignals = new DevComponents.DotNetBar.ButtonX();
-            this.btnStartTestSequence = new DevComponents.DotNetBar.ButtonX();
-            this.btnNextTestSequence = new DevComponents.DotNetBar.ButtonX();
-            this.btnPauseTestSequence = new DevComponents.DotNetBar.ButtonX();
-            this.btnResumeTestSequence = new DevComponents.DotNetBar.ButtonX();
-            this.btnStopTestSequence = new DevComponents.DotNetBar.ButtonX();
-            this.btnChangeEdgeNode = new DevComponents.DotNetBar.ButtonX();
-            this.tbCommand = new DevComponents.DotNetBar.SuperTabItem();
-            this.tbTest = new DevComponents.DotNetBar.SuperTabItem();
-            this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.panelEx7 = new DevComponents.DotNetBar.PanelEx();
+            this.btnConnect = new System.Windows.Forms.Button();
+            this.btnDisconnect = new System.Windows.Forms.Button();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.btnPause = new System.Windows.Forms.Button();
+            this.btnContinue = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnStartRecord = new System.Windows.Forms.Button();
+            this.btnStopRecord = new System.Windows.Forms.Button();
+            this.btnSaveSignals = new System.Windows.Forms.Button();
+            this.btnStartTestSequence = new System.Windows.Forms.Button();
+            this.btnNextTestSequence = new System.Windows.Forms.Button();
+            this.btnPauseTestSequence = new System.Windows.Forms.Button();
+            this.btnResumeTestSequence = new System.Windows.Forms.Button();
+            this.btnStopTestSequence = new System.Windows.Forms.Button();
+            this.btnChangeEdgeNode = new System.Windows.Forms.Button();
             this.tlpClientSetting = new System.Windows.Forms.TableLayoutPanel();
-            this.tbClientId = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.labelX16 = new DevComponents.DotNetBar.LabelX();
-            this.ipAddressInput1 = new DevComponents.Editors.IpAddressInput();
-            this.labelX18 = new DevComponents.DotNetBar.LabelX();
-            this.iiPort = new DevComponents.Editors.IntegerInput();
-            this.labelX19 = new DevComponents.DotNetBar.LabelX();
-            this.tbUser = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tbPassword = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.labelX22 = new DevComponents.DotNetBar.LabelX();
-            this.lblScadaId = new DevComponents.DotNetBar.LabelX();
-            this.lblGroupId = new DevComponents.DotNetBar.LabelX();
-            this.tbGroupId = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tbScadaId = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tbEdgeNodeId = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.labelX1 = new DevComponents.DotNetBar.LabelX();
-            this.lblEdgeNodeId = new DevComponents.DotNetBar.LabelX();
-            this.checkBoxX1 = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.btnConnectClient = new DevComponents.DotNetBar.ButtonX();
-            this.btnDisconnectClient = new DevComponents.DotNetBar.ButtonX();
-            this.tbClientSettings = new DevComponents.DotNetBar.SuperTabItem();
-            this.tbParameters = new DevComponents.DotNetBar.SuperTabItem();
-            ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.superTabControlPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
-            this.superTabControl1.SuspendLayout();
-            this.superTabControlPanel3.SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnConnectClient = new System.Windows.Forms.Button();
+            this.btnDisconnectClient = new System.Windows.Forms.Button();
+            this.tbEdgeNodeId = new System.Windows.Forms.TextBox();
+            this.tbGroupId = new System.Windows.Forms.TextBox();
+            this.tbScadaId = new System.Windows.Forms.TextBox();
+            this.tbClientId = new System.Windows.Forms.TextBox();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.ipAddressInput1 = new System.Windows.Forms.TextBox();
+            this.iiPort = new System.Windows.Forms.TextBox();
+            this.tbUser = new System.Windows.Forms.TextBox();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
-            this.superTabControlPanel1.SuspendLayout();
-            this.panelEx7.SuspendLayout();
             this.tlpClientSetting.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ipAddressInput1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iiPort)).BeginInit();
+            this.tabControl2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.tabControl1.ControlBox.CloseBox.Name = "";
-            // 
-            // 
-            // 
-            this.tabControl1.ControlBox.MenuBox.Name = "";
-            this.tabControl1.ControlBox.Name = "";
-            this.tabControl1.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.tabControl1.ControlBox.MenuBox,
-            this.tabControl1.ControlBox.CloseBox});
-            this.tabControl1.Controls.Add(this.superTabControlPanel2);
-            this.tabControl1.Controls.Add(this.superTabControlPanel1);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.ReorderTabsEnabled = true;
-            this.tabControl1.SelectedTabFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.tabControl1.SelectedTabIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1064, 837);
-            this.tabControl1.TabFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.Tabs.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.tbClientSettings,
-            this.tbTest});
-            // 
-            // superTabControlPanel2
-            // 
-            this.superTabControlPanel2.Controls.Add(this.superTabControl1);
-            this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel2.Location = new System.Drawing.Point(0, 25);
-            this.superTabControlPanel2.Name = "superTabControlPanel2";
-            this.superTabControlPanel2.Size = new System.Drawing.Size(1064, 812);
-            this.superTabControlPanel2.TabIndex = 0;
-            this.superTabControlPanel2.TabItem = this.tbTest;
-            // 
-            // superTabControl1
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.superTabControl1.ControlBox.CloseBox.Name = "";
-            // 
-            // 
-            // 
-            this.superTabControl1.ControlBox.MenuBox.Name = "";
-            this.superTabControl1.ControlBox.Name = "";
-            this.superTabControl1.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.superTabControl1.ControlBox.MenuBox,
-            this.superTabControl1.ControlBox.CloseBox});
-            this.superTabControl1.Controls.Add(this.superTabControlPanel3);
-            this.superTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControl1.Location = new System.Drawing.Point(0, 0);
-            this.superTabControl1.Name = "superTabControl1";
-            this.superTabControl1.ReorderTabsEnabled = true;
-            this.superTabControl1.SelectedTabFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.superTabControl1.SelectedTabIndex = 0;
-            this.superTabControl1.Size = new System.Drawing.Size(1064, 812);
-            this.superTabControl1.TabFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.superTabControl1.TabIndex = 17;
-            this.superTabControl1.Tabs.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.tbCommand});
-            this.superTabControl1.Text = "superTabControl1";
-            // 
-            // superTabControlPanel3
-            // 
-            this.superTabControlPanel3.Controls.Add(this.tableLayoutPanel1);
-            this.superTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel3.Location = new System.Drawing.Point(0, 25);
-            this.superTabControlPanel3.Name = "superTabControlPanel3";
-            this.superTabControlPanel3.Size = new System.Drawing.Size(1064, 787);
-            this.superTabControlPanel3.TabIndex = 1;
-            this.superTabControlPanel3.TabItem = this.tbCommand;
             // 
             // tableLayoutPanel1
             // 
@@ -184,8 +90,8 @@
             this.tableLayoutPanel1.Controls.Add(this.btnDisconnect, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnRun, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnPause, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnStop, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnContinue, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnStop, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnStartRecord, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.btnStopRecord, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.btnSaveSignals, 2, 2);
@@ -219,232 +125,158 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1064, 787);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1050, 805);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // btnConnect
             // 
-            this.btnConnect.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnConnect.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnConnect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnConnect.Location = new System.Drawing.Point(3, 3);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(171, 33);
-            this.btnConnect.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnConnect.TabIndex = 0;
+            this.btnConnect.Size = new System.Drawing.Size(169, 34);
+            this.btnConnect.TabIndex = 18;
             this.btnConnect.Text = "Connect";
+            this.btnConnect.UseVisualStyleBackColor = true;
             // 
             // btnDisconnect
             // 
-            this.btnDisconnect.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnDisconnect.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnDisconnect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDisconnect.Location = new System.Drawing.Point(180, 3);
+            this.btnDisconnect.Location = new System.Drawing.Point(178, 3);
             this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(171, 33);
-            this.btnDisconnect.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnDisconnect.TabIndex = 1;
+            this.btnDisconnect.Size = new System.Drawing.Size(169, 34);
+            this.btnDisconnect.TabIndex = 19;
             this.btnDisconnect.Text = "Disconnect";
+            this.btnDisconnect.UseVisualStyleBackColor = true;
             // 
             // btnRun
             // 
-            this.btnRun.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnRun.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnRun.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnRun.Location = new System.Drawing.Point(3, 42);
+            this.btnRun.Location = new System.Drawing.Point(3, 43);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(171, 33);
-            this.btnRun.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnRun.TabIndex = 2;
+            this.btnRun.Size = new System.Drawing.Size(169, 34);
+            this.btnRun.TabIndex = 20;
             this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
             // 
             // btnPause
             // 
-            this.btnPause.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnPause.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnPause.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPause.Location = new System.Drawing.Point(180, 42);
+            this.btnPause.Location = new System.Drawing.Point(178, 43);
             this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(171, 33);
-            this.btnPause.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnPause.TabIndex = 3;
+            this.btnPause.Size = new System.Drawing.Size(169, 34);
+            this.btnPause.TabIndex = 21;
             this.btnPause.Text = "Pause";
-            // 
-            // btnStop
-            // 
-            this.btnStop.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnStop.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnStop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStop.Location = new System.Drawing.Point(534, 42);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(171, 33);
-            this.btnStop.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnStop.TabIndex = 4;
-            this.btnStop.Text = "Stop";
+            this.btnPause.UseVisualStyleBackColor = true;
             // 
             // btnContinue
             // 
-            this.btnContinue.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnContinue.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnContinue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnContinue.Location = new System.Drawing.Point(357, 42);
+            this.btnContinue.Location = new System.Drawing.Point(353, 43);
             this.btnContinue.Name = "btnContinue";
-            this.btnContinue.Size = new System.Drawing.Size(171, 33);
-            this.btnContinue.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnContinue.TabIndex = 8;
+            this.btnContinue.Size = new System.Drawing.Size(169, 34);
+            this.btnContinue.TabIndex = 22;
             this.btnContinue.Text = "Continue";
+            this.btnContinue.UseVisualStyleBackColor = true;
+            // 
+            // btnStop
+            // 
+            this.btnStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStop.Location = new System.Drawing.Point(528, 43);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(169, 34);
+            this.btnStop.TabIndex = 23;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
             // 
             // btnStartRecord
             // 
-            this.btnStartRecord.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnStartRecord.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnStartRecord.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStartRecord.Location = new System.Drawing.Point(3, 81);
+            this.btnStartRecord.Location = new System.Drawing.Point(3, 83);
             this.btnStartRecord.Name = "btnStartRecord";
-            this.btnStartRecord.Size = new System.Drawing.Size(171, 33);
-            this.btnStartRecord.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnStartRecord.TabIndex = 9;
+            this.btnStartRecord.Size = new System.Drawing.Size(169, 34);
+            this.btnStartRecord.TabIndex = 24;
             this.btnStartRecord.Text = "Start Record";
+            this.btnStartRecord.UseVisualStyleBackColor = true;
             // 
             // btnStopRecord
             // 
-            this.btnStopRecord.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnStopRecord.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnStopRecord.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStopRecord.Location = new System.Drawing.Point(180, 81);
+            this.btnStopRecord.Location = new System.Drawing.Point(178, 83);
             this.btnStopRecord.Name = "btnStopRecord";
-            this.btnStopRecord.Size = new System.Drawing.Size(171, 33);
-            this.btnStopRecord.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnStopRecord.TabIndex = 10;
+            this.btnStopRecord.Size = new System.Drawing.Size(169, 34);
+            this.btnStopRecord.TabIndex = 25;
             this.btnStopRecord.Text = "Stop Record";
+            this.btnStopRecord.UseVisualStyleBackColor = true;
             // 
             // btnSaveSignals
             // 
-            this.btnSaveSignals.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnSaveSignals.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnSaveSignals.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSaveSignals.Location = new System.Drawing.Point(357, 81);
+            this.btnSaveSignals.Location = new System.Drawing.Point(353, 83);
             this.btnSaveSignals.Name = "btnSaveSignals";
-            this.btnSaveSignals.Size = new System.Drawing.Size(171, 33);
-            this.btnSaveSignals.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnSaveSignals.TabIndex = 11;
+            this.btnSaveSignals.Size = new System.Drawing.Size(169, 34);
+            this.btnSaveSignals.TabIndex = 26;
             this.btnSaveSignals.Text = "Save Signals";
+            this.btnSaveSignals.UseVisualStyleBackColor = true;
             // 
             // btnStartTestSequence
             // 
-            this.btnStartTestSequence.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnStartTestSequence.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnStartTestSequence.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStartTestSequence.Location = new System.Drawing.Point(3, 120);
+            this.btnStartTestSequence.Location = new System.Drawing.Point(3, 123);
             this.btnStartTestSequence.Name = "btnStartTestSequence";
-            this.btnStartTestSequence.Size = new System.Drawing.Size(171, 33);
-            this.btnStartTestSequence.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnStartTestSequence.TabIndex = 13;
+            this.btnStartTestSequence.Size = new System.Drawing.Size(169, 34);
+            this.btnStartTestSequence.TabIndex = 27;
             this.btnStartTestSequence.Text = "Start Test Sequence";
+            this.btnStartTestSequence.UseVisualStyleBackColor = true;
             // 
             // btnNextTestSequence
             // 
-            this.btnNextTestSequence.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnNextTestSequence.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnNextTestSequence.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnNextTestSequence.Location = new System.Drawing.Point(180, 120);
+            this.btnNextTestSequence.Location = new System.Drawing.Point(178, 123);
             this.btnNextTestSequence.Name = "btnNextTestSequence";
-            this.btnNextTestSequence.Size = new System.Drawing.Size(171, 33);
-            this.btnNextTestSequence.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnNextTestSequence.TabIndex = 12;
+            this.btnNextTestSequence.Size = new System.Drawing.Size(169, 34);
+            this.btnNextTestSequence.TabIndex = 28;
             this.btnNextTestSequence.Text = "Next Test Sequence";
+            this.btnNextTestSequence.UseVisualStyleBackColor = true;
             // 
             // btnPauseTestSequence
             // 
-            this.btnPauseTestSequence.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnPauseTestSequence.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnPauseTestSequence.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPauseTestSequence.Location = new System.Drawing.Point(357, 120);
+            this.btnPauseTestSequence.Location = new System.Drawing.Point(353, 123);
             this.btnPauseTestSequence.Name = "btnPauseTestSequence";
-            this.btnPauseTestSequence.Size = new System.Drawing.Size(171, 33);
-            this.btnPauseTestSequence.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnPauseTestSequence.TabIndex = 14;
+            this.btnPauseTestSequence.Size = new System.Drawing.Size(169, 34);
+            this.btnPauseTestSequence.TabIndex = 29;
             this.btnPauseTestSequence.Text = "Pause Test Sequence";
+            this.btnPauseTestSequence.UseVisualStyleBackColor = true;
             // 
             // btnResumeTestSequence
             // 
-            this.btnResumeTestSequence.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnResumeTestSequence.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnResumeTestSequence.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnResumeTestSequence.Location = new System.Drawing.Point(534, 120);
+            this.btnResumeTestSequence.Location = new System.Drawing.Point(528, 123);
             this.btnResumeTestSequence.Name = "btnResumeTestSequence";
-            this.btnResumeTestSequence.Size = new System.Drawing.Size(171, 33);
-            this.btnResumeTestSequence.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnResumeTestSequence.TabIndex = 15;
+            this.btnResumeTestSequence.Size = new System.Drawing.Size(169, 34);
+            this.btnResumeTestSequence.TabIndex = 30;
             this.btnResumeTestSequence.Text = "Resume Test Sequence";
+            this.btnResumeTestSequence.UseVisualStyleBackColor = true;
             // 
             // btnStopTestSequence
             // 
-            this.btnStopTestSequence.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnStopTestSequence.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnStopTestSequence.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStopTestSequence.Location = new System.Drawing.Point(711, 120);
+            this.btnStopTestSequence.Location = new System.Drawing.Point(703, 123);
             this.btnStopTestSequence.Name = "btnStopTestSequence";
-            this.btnStopTestSequence.Size = new System.Drawing.Size(171, 33);
-            this.btnStopTestSequence.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnStopTestSequence.TabIndex = 16;
+            this.btnStopTestSequence.Size = new System.Drawing.Size(169, 34);
+            this.btnStopTestSequence.TabIndex = 31;
             this.btnStopTestSequence.Text = "Stop Test Sequence";
+            this.btnStopTestSequence.UseVisualStyleBackColor = true;
             // 
             // btnChangeEdgeNode
             // 
-            this.btnChangeEdgeNode.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnChangeEdgeNode.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnChangeEdgeNode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnChangeEdgeNode.Location = new System.Drawing.Point(3, 744);
+            this.btnChangeEdgeNode.Location = new System.Drawing.Point(3, 763);
             this.btnChangeEdgeNode.Name = "btnChangeEdgeNode";
-            this.btnChangeEdgeNode.Size = new System.Drawing.Size(171, 40);
-            this.btnChangeEdgeNode.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnChangeEdgeNode.TabIndex = 17;
+            this.btnChangeEdgeNode.Size = new System.Drawing.Size(169, 39);
+            this.btnChangeEdgeNode.TabIndex = 32;
             this.btnChangeEdgeNode.Text = "Change Edge Node";
-            // 
-            // tbCommand
-            // 
-            this.tbCommand.AttachedControl = this.superTabControlPanel3;
-            this.tbCommand.GlobalItem = false;
-            this.tbCommand.Name = "tbCommand";
-            this.tbCommand.Text = "Command";
-            // 
-            // tbTest
-            // 
-            this.tbTest.AttachedControl = this.superTabControlPanel2;
-            this.tbTest.GlobalItem = false;
-            this.tbTest.Name = "tbTest";
-            this.tbTest.Text = "Test";
-            // 
-            // superTabControlPanel1
-            // 
-            this.superTabControlPanel1.Controls.Add(this.panelEx7);
-            this.superTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel1.Location = new System.Drawing.Point(0, 25);
-            this.superTabControlPanel1.Name = "superTabControlPanel1";
-            this.superTabControlPanel1.Size = new System.Drawing.Size(1064, 812);
-            this.superTabControlPanel1.TabIndex = 0;
-            this.superTabControlPanel1.TabItem = this.tbClientSettings;
-            // 
-            // panelEx7
-            // 
-            this.panelEx7.CanvasColor = System.Drawing.SystemColors.Control;
-            this.panelEx7.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx7.Controls.Add(this.tlpClientSetting);
-            this.panelEx7.DisabledBackColor = System.Drawing.Color.Empty;
-            this.panelEx7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelEx7.Location = new System.Drawing.Point(0, 0);
-            this.panelEx7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panelEx7.Name = "panelEx7";
-            this.panelEx7.Size = new System.Drawing.Size(1064, 812);
-            this.panelEx7.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelEx7.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.panelEx7.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.panelEx7.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.panelEx7.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.panelEx7.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.panelEx7.Style.GradientAngle = 90;
-            this.panelEx7.TabIndex = 2;
+            this.btnChangeEdgeNode.UseVisualStyleBackColor = true;
             // 
             // tlpClientSetting
             // 
@@ -453,25 +285,24 @@
             this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpClientSetting.Controls.Add(this.tbClientId, 1, 10);
-            this.tlpClientSetting.Controls.Add(this.labelX16, 0, 2);
-            this.tlpClientSetting.Controls.Add(this.ipAddressInput1, 1, 0);
-            this.tlpClientSetting.Controls.Add(this.labelX18, 0, 4);
-            this.tlpClientSetting.Controls.Add(this.iiPort, 1, 2);
-            this.tlpClientSetting.Controls.Add(this.labelX19, 0, 5);
-            this.tlpClientSetting.Controls.Add(this.tbUser, 1, 4);
-            this.tlpClientSetting.Controls.Add(this.tbPassword, 1, 5);
-            this.tlpClientSetting.Controls.Add(this.labelX22, 0, 10);
-            this.tlpClientSetting.Controls.Add(this.lblScadaId, 0, 13);
-            this.tlpClientSetting.Controls.Add(this.lblGroupId, 0, 14);
-            this.tlpClientSetting.Controls.Add(this.tbGroupId, 1, 14);
-            this.tlpClientSetting.Controls.Add(this.tbScadaId, 1, 13);
-            this.tlpClientSetting.Controls.Add(this.tbEdgeNodeId, 1, 15);
-            this.tlpClientSetting.Controls.Add(this.labelX1, 0, 0);
-            this.tlpClientSetting.Controls.Add(this.lblEdgeNodeId, 0, 15);
-            this.tlpClientSetting.Controls.Add(this.checkBoxX1, 0, 17);
+            this.tlpClientSetting.Controls.Add(this.label1, 0, 0);
+            this.tlpClientSetting.Controls.Add(this.label2, 0, 2);
+            this.tlpClientSetting.Controls.Add(this.label3, 0, 4);
+            this.tlpClientSetting.Controls.Add(this.label4, 0, 5);
+            this.tlpClientSetting.Controls.Add(this.label5, 0, 10);
+            this.tlpClientSetting.Controls.Add(this.label6, 0, 13);
+            this.tlpClientSetting.Controls.Add(this.label7, 0, 14);
+            this.tlpClientSetting.Controls.Add(this.label8, 0, 15);
             this.tlpClientSetting.Controls.Add(this.btnConnectClient, 0, 16);
             this.tlpClientSetting.Controls.Add(this.btnDisconnectClient, 1, 16);
+            this.tlpClientSetting.Controls.Add(this.tbEdgeNodeId, 1, 15);
+            this.tlpClientSetting.Controls.Add(this.tbGroupId, 1, 14);
+            this.tlpClientSetting.Controls.Add(this.tbScadaId, 1, 13);
+            this.tlpClientSetting.Controls.Add(this.tbClientId, 1, 10);
+            this.tlpClientSetting.Controls.Add(this.tbPassword, 1, 5);
+            this.tlpClientSetting.Controls.Add(this.ipAddressInput1, 1, 0);
+            this.tlpClientSetting.Controls.Add(this.iiPort, 1, 2);
+            this.tlpClientSetting.Controls.Add(this.tbUser, 1, 4);
             this.tlpClientSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpClientSetting.Location = new System.Drawing.Point(0, 0);
             this.tlpClientSetting.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -491,382 +322,307 @@
             this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 503F));
-            this.tlpClientSetting.Size = new System.Drawing.Size(1064, 812);
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 539F));
+            this.tlpClientSetting.Size = new System.Drawing.Size(1050, 805);
             this.tlpClientSetting.TabIndex = 1;
             // 
-            // tbClientId
-            // 
-            // 
-            // 
-            // 
-            this.tbClientId.Border.Class = "TextBoxBorder";
-            this.tbClientId.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tlpClientSetting.SetColumnSpan(this.tbClientId, 3);
-            this.tbClientId.Location = new System.Drawing.Point(162, 124);
-            this.tbClientId.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbClientId.Name = "tbClientId";
-            this.tbClientId.PreventEnterBeep = true;
-            this.tbClientId.Size = new System.Drawing.Size(279, 20);
-            this.tbClientId.TabIndex = 11;
-            this.tbClientId.Text = "SparkplugDemo";
-            this.tbClientId.Visible = false;
-            // 
-            // labelX16
-            // 
-            // 
-            // 
-            // 
-            this.labelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.labelX16.Location = new System.Drawing.Point(4, 36);
-            this.labelX16.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.labelX16.Name = "labelX16";
-            this.labelX16.Size = new System.Drawing.Size(150, 27);
-            this.labelX16.TabIndex = 2;
-            this.labelX16.Text = "Broker port";
-            // 
-            // ipAddressInput1
-            // 
-            this.ipAddressInput1.AutoOverwrite = true;
-            // 
-            // 
-            // 
-            this.ipAddressInput1.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.ipAddressInput1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ipAddressInput1.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.ipAddressInput1.Location = new System.Drawing.Point(162, 3);
-            this.ipAddressInput1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ipAddressInput1.Name = "ipAddressInput1";
-            this.ipAddressInput1.Size = new System.Drawing.Size(157, 20);
-            this.ipAddressInput1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.ipAddressInput1.TabIndex = 0;
-            this.ipAddressInput1.Value = "192.168.1.19";
-            // 
-            // labelX18
-            // 
-            this.labelX18.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.labelX18.Location = new System.Drawing.Point(4, 69);
-            this.labelX18.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.labelX18.Name = "labelX18";
-            this.labelX18.Size = new System.Drawing.Size(62, 18);
-            this.labelX18.TabIndex = 4;
-            this.labelX18.Text = "User name";
-            // 
-            // iiPort
-            // 
-            // 
-            // 
-            // 
-            this.iiPort.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.iiPort.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.iiPort.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.iiPort.Location = new System.Drawing.Point(162, 36);
-            this.iiPort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.iiPort.MinValue = 1;
-            this.iiPort.Name = "iiPort";
-            this.iiPort.ShowUpDown = true;
-            this.iiPort.Size = new System.Drawing.Size(156, 20);
-            this.iiPort.TabIndex = 3;
-            this.iiPort.Value = 1883;
-            // 
-            // labelX19
-            // 
-            this.labelX19.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.labelX19.Location = new System.Drawing.Point(4, 95);
-            this.labelX19.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.labelX19.Name = "labelX19";
-            this.labelX19.Size = new System.Drawing.Size(56, 18);
-            this.labelX19.TabIndex = 5;
-            this.labelX19.Text = "Password";
-            // 
-            // tbUser
-            // 
-            // 
-            // 
-            // 
-            this.tbUser.Border.Class = "TextBoxBorder";
-            this.tbUser.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbUser.Location = new System.Drawing.Point(162, 69);
-            this.tbUser.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbUser.Name = "tbUser";
-            this.tbUser.PreventEnterBeep = true;
-            this.tbUser.Size = new System.Drawing.Size(156, 20);
-            this.tbUser.TabIndex = 5;
-            this.tbUser.Text = "Admin";
-            // 
-            // tbPassword
-            // 
-            // 
-            // 
-            // 
-            this.tbPassword.Border.Class = "TextBoxBorder";
-            this.tbPassword.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbPassword.Location = new System.Drawing.Point(162, 95);
-            this.tbPassword.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbPassword.Name = "tbPassword";
-            this.tbPassword.PasswordChar = '*';
-            this.tbPassword.PreventEnterBeep = true;
-            this.tbPassword.Size = new System.Drawing.Size(156, 23);
-            this.tbPassword.TabIndex = 6;
-            this.tbPassword.Text = "123456";
-            // 
-            // labelX22
-            // 
-            this.labelX22.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX22.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.labelX22.Location = new System.Drawing.Point(4, 124);
-            this.labelX22.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.labelX22.Name = "labelX22";
-            this.labelX22.Size = new System.Drawing.Size(51, 18);
-            this.labelX22.TabIndex = 5;
-            this.labelX22.Text = "Client ID";
-            this.labelX22.Visible = false;
-            // 
-            // lblScadaId
-            // 
-            // 
-            // 
-            // 
-            this.lblScadaId.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.lblScadaId.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblScadaId.Location = new System.Drawing.Point(4, 150);
-            this.lblScadaId.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.lblScadaId.Name = "lblScadaId";
-            this.lblScadaId.Size = new System.Drawing.Size(88, 21);
-            this.lblScadaId.TabIndex = 20;
-            this.lblScadaId.Text = "Scada Host ID";
-            // 
-            // lblGroupId
-            // 
-            // 
-            // 
-            // 
-            this.lblGroupId.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.lblGroupId.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblGroupId.Location = new System.Drawing.Point(4, 188);
-            this.lblGroupId.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.lblGroupId.Name = "lblGroupId";
-            this.lblGroupId.Size = new System.Drawing.Size(150, 25);
-            this.lblGroupId.TabIndex = 22;
-            this.lblGroupId.Text = "Group Identifier";
-            // 
-            // tbGroupId
-            // 
-            // 
-            // 
-            // 
-            this.tbGroupId.Border.Class = "TextBoxBorder";
-            this.tbGroupId.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbGroupId.Location = new System.Drawing.Point(162, 188);
-            this.tbGroupId.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbGroupId.Name = "tbGroupId";
-            this.tbGroupId.PreventEnterBeep = true;
-            this.tbGroupId.Size = new System.Drawing.Size(156, 20);
-            this.tbGroupId.TabIndex = 23;
-            this.tbGroupId.Text = "EDM";
-            // 
-            // tbScadaId
-            // 
-            // 
-            // 
-            // 
-            this.tbScadaId.Border.Class = "TextBoxBorder";
-            this.tbScadaId.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbScadaId.Location = new System.Drawing.Point(162, 150);
-            this.tbScadaId.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbScadaId.Name = "tbScadaId";
-            this.tbScadaId.PreventEnterBeep = true;
-            this.tbScadaId.Size = new System.Drawing.Size(156, 20);
-            this.tbScadaId.TabIndex = 24;
-            this.tbScadaId.Text = "Scada2";
-            // 
-            // tbEdgeNodeId
-            // 
-            // 
-            // 
-            // 
-            this.tbEdgeNodeId.Border.Class = "TextBoxBorder";
-            this.tbEdgeNodeId.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tbEdgeNodeId.Location = new System.Drawing.Point(162, 227);
-            this.tbEdgeNodeId.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbEdgeNodeId.Name = "tbEdgeNodeId";
-            this.tbEdgeNodeId.PreventEnterBeep = true;
-            this.tbEdgeNodeId.Size = new System.Drawing.Size(156, 20);
-            this.tbEdgeNodeId.TabIndex = 26;
-            this.tbEdgeNodeId.Text = "EdgeNode2";
-            // 
-            // labelX1
-            // 
-            // 
-            // 
-            // 
-            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.labelX1.Location = new System.Drawing.Point(4, 3);
-            this.labelX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(150, 27);
-            this.labelX1.TabIndex = 27;
-            this.labelX1.Text = "Broker IP";
-            // 
-            // lblEdgeNodeId
-            // 
-            // 
-            // 
-            // 
-            this.lblEdgeNodeId.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.lblEdgeNodeId.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblEdgeNodeId.Location = new System.Drawing.Point(4, 227);
-            this.lblEdgeNodeId.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.lblEdgeNodeId.Name = "lblEdgeNodeId";
-            this.lblEdgeNodeId.Size = new System.Drawing.Size(150, 19);
-            this.lblEdgeNodeId.TabIndex = 25;
-            this.lblEdgeNodeId.Text = "Edge Node ID";
-            // 
-            // checkBoxX1
-            // 
-            this.checkBoxX1.AutoSize = true;
-            // 
-            // 
-            // 
-            this.checkBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.checkBoxX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.checkBoxX1.Location = new System.Drawing.Point(4, 312);
-            this.checkBoxX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBoxX1.Name = "checkBoxX1";
-            this.checkBoxX1.Size = new System.Drawing.Size(0, 0);
-            this.checkBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.checkBoxX1.TabIndex = 14;
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(98, 26);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Broker IP";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(3, 26);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(98, 26);
+            this.label2.TabIndex = 31;
+            this.label2.Text = "Broker Port";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(3, 52);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(98, 26);
+            this.label3.TabIndex = 32;
+            this.label3.Text = "User name";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label4.Location = new System.Drawing.Point(3, 78);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 26);
+            this.label4.TabIndex = 33;
+            this.label4.Text = "Password";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label5.Location = new System.Drawing.Point(3, 104);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(98, 26);
+            this.label5.TabIndex = 34;
+            this.label5.Text = "Client ID";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label6.Location = new System.Drawing.Point(3, 130);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(98, 26);
+            this.label6.TabIndex = 35;
+            this.label6.Text = "Scada Host ID";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label7.Location = new System.Drawing.Point(3, 156);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(98, 31);
+            this.label7.TabIndex = 36;
+            this.label7.Text = "Group Identifier";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label8.Location = new System.Drawing.Point(3, 187);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(98, 32);
+            this.label8.TabIndex = 37;
+            this.label8.Text = "Edge Node ID";
             // 
             // btnConnectClient
             // 
-            this.btnConnectClient.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnConnectClient.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnConnectClient.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnConnectClient.Location = new System.Drawing.Point(3, 269);
+            this.btnConnectClient.Location = new System.Drawing.Point(3, 222);
             this.btnConnectClient.Name = "btnConnectClient";
-            this.btnConnectClient.Size = new System.Drawing.Size(152, 37);
-            this.btnConnectClient.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnConnectClient.TabIndex = 28;
+            this.btnConnectClient.Size = new System.Drawing.Size(98, 41);
+            this.btnConnectClient.TabIndex = 38;
             this.btnConnectClient.Text = "Connect";
+            this.btnConnectClient.UseVisualStyleBackColor = true;
             this.btnConnectClient.Click += new System.EventHandler(this.btnConnectClient_Click);
             // 
             // btnDisconnectClient
             // 
-            this.btnDisconnectClient.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnDisconnectClient.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnDisconnectClient.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDisconnectClient.Location = new System.Drawing.Point(161, 269);
+            this.btnDisconnectClient.Location = new System.Drawing.Point(107, 222);
             this.btnDisconnectClient.Name = "btnDisconnectClient";
-            this.btnDisconnectClient.Size = new System.Drawing.Size(159, 37);
-            this.btnDisconnectClient.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.btnDisconnectClient.TabIndex = 29;
+            this.btnDisconnectClient.Size = new System.Drawing.Size(159, 41);
+            this.btnDisconnectClient.TabIndex = 39;
             this.btnDisconnectClient.Text = "Disconnect";
+            this.btnDisconnectClient.UseVisualStyleBackColor = true;
             this.btnDisconnectClient.Click += new System.EventHandler(this.btnDisonnectClient_Click);
             // 
-            // tbClientSettings
+            // tbEdgeNodeId
             // 
-            this.tbClientSettings.AttachedControl = this.superTabControlPanel1;
-            this.tbClientSettings.GlobalItem = false;
-            this.tbClientSettings.Name = "tbClientSettings";
-            this.tbClientSettings.Text = "Sparkplug";
+            this.tbEdgeNodeId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbEdgeNodeId.Location = new System.Drawing.Point(107, 190);
+            this.tbEdgeNodeId.Name = "tbEdgeNodeId";
+            this.tbEdgeNodeId.Size = new System.Drawing.Size(159, 20);
+            this.tbEdgeNodeId.TabIndex = 40;
+            this.tbEdgeNodeId.Text = "EdgeNode2";
             // 
-            // tbParameters
+            // tbGroupId
             // 
-            this.tbParameters.GlobalItem = false;
-            this.tbParameters.Name = "tbParameters";
-            this.tbParameters.Text = "Global Parameters";
+            this.tbGroupId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbGroupId.Location = new System.Drawing.Point(107, 159);
+            this.tbGroupId.Name = "tbGroupId";
+            this.tbGroupId.Size = new System.Drawing.Size(159, 20);
+            this.tbGroupId.TabIndex = 41;
+            this.tbGroupId.Text = "EDM";
+            // 
+            // tbScadaId
+            // 
+            this.tbScadaId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbScadaId.Location = new System.Drawing.Point(107, 133);
+            this.tbScadaId.Name = "tbScadaId";
+            this.tbScadaId.Size = new System.Drawing.Size(159, 20);
+            this.tbScadaId.TabIndex = 42;
+            this.tbScadaId.Text = "Scada2";
+            // 
+            // tbClientId
+            // 
+            this.tbClientId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbClientId.Location = new System.Drawing.Point(107, 107);
+            this.tbClientId.Name = "tbClientId";
+            this.tbClientId.Size = new System.Drawing.Size(159, 20);
+            this.tbClientId.TabIndex = 43;
+            this.tbClientId.Text = "SparkplugDemo";
+            // 
+            // tbPassword
+            // 
+            this.tbPassword.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPassword.Location = new System.Drawing.Point(107, 81);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.PasswordChar = '*';
+            this.tbPassword.Size = new System.Drawing.Size(159, 20);
+            this.tbPassword.TabIndex = 44;
+            this.tbPassword.Text = "123456";
+            // 
+            // ipAddressInput1
+            // 
+            this.ipAddressInput1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ipAddressInput1.Location = new System.Drawing.Point(107, 3);
+            this.ipAddressInput1.Name = "ipAddressInput1";
+            this.ipAddressInput1.Size = new System.Drawing.Size(159, 20);
+            this.ipAddressInput1.TabIndex = 47;
+            this.ipAddressInput1.Text = "192.168.1.19";
+            // 
+            // iiPort
+            // 
+            this.iiPort.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iiPort.Location = new System.Drawing.Point(107, 29);
+            this.iiPort.Name = "iiPort";
+            this.iiPort.Size = new System.Drawing.Size(159, 20);
+            this.iiPort.TabIndex = 48;
+            this.iiPort.Text = "1883";
+            // 
+            // tbUser
+            // 
+            this.tbUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbUser.Location = new System.Drawing.Point(107, 55);
+            this.tbUser.Name = "tbUser";
+            this.tbUser.Size = new System.Drawing.Size(159, 20);
+            this.tbUser.TabIndex = 46;
+            this.tbUser.Text = "Admin";
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage1);
+            this.tabControl2.Controls.Add(this.tabPage2);
+            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl2.Location = new System.Drawing.Point(0, 0);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(1064, 837);
+            this.tabControl2.TabIndex = 1;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1056, 811);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Sparkplug Settings";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.tlpClientSetting);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1050, 805);
+            this.panel1.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.panel2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1056, 811);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Test";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tableLayoutPanel1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1050, 805);
+            this.panel2.TabIndex = 0;
             // 
             // SparkplugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 837);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl2);
             this.Name = "SparkplugForm";
             this.Text = "MQTT Sparkplug Demo";
-            ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.superTabControlPanel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).EndInit();
-            this.superTabControl1.ResumeLayout(false);
-            this.superTabControlPanel3.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.superTabControlPanel1.ResumeLayout(false);
-            this.panelEx7.ResumeLayout(false);
             this.tlpClientSetting.ResumeLayout(false);
             this.tlpClientSetting.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ipAddressInput1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iiPort)).EndInit();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private DevComponents.DotNetBar.SuperTabControl tabControl1;
-        private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel1;
-        private DevComponents.DotNetBar.SuperTabItem tbClientSettings;
-        private DevComponents.DotNetBar.PanelEx panelEx7;
         private System.Windows.Forms.TableLayoutPanel tlpClientSetting;
-        private DevComponents.DotNetBar.Controls.TextBoxX tbClientId;
-        private DevComponents.DotNetBar.LabelX labelX16;
-        private DevComponents.Editors.IpAddressInput ipAddressInput1;
-        private DevComponents.DotNetBar.LabelX labelX18;
-        private DevComponents.Editors.IntegerInput iiPort;
-        private DevComponents.DotNetBar.LabelX labelX19;
-        private DevComponents.DotNetBar.Controls.TextBoxX tbUser;
-        private DevComponents.DotNetBar.Controls.TextBoxX tbPassword;
-        private DevComponents.DotNetBar.LabelX labelX22;
-        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX1;
-        private DevComponents.DotNetBar.LabelX lblScadaId;
-        private DevComponents.DotNetBar.LabelX lblGroupId;
-        private DevComponents.DotNetBar.Controls.TextBoxX tbGroupId;
-        private DevComponents.DotNetBar.Controls.TextBoxX tbScadaId;
-        private DevComponents.DotNetBar.LabelX lblEdgeNodeId;
-        private DevComponents.DotNetBar.Controls.TextBoxX tbEdgeNodeId;
-        private DevComponents.DotNetBar.LabelX labelX1;
-        private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel2;
-        private DevComponents.DotNetBar.ButtonX btnConnect;
-        private DevComponents.DotNetBar.SuperTabItem tbTest;
-        private DevComponents.DotNetBar.ButtonX btnPause;
-        private DevComponents.DotNetBar.ButtonX btnRun;
-        private DevComponents.DotNetBar.ButtonX btnDisconnect;
-        private DevComponents.DotNetBar.ButtonX btnStop;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private DevComponents.DotNetBar.ButtonX btnConnectClient;
-        private DevComponents.DotNetBar.ButtonX btnDisconnectClient;
-        private DevComponents.DotNetBar.ButtonX btnContinue;
-        private DevComponents.DotNetBar.ButtonX btnStartRecord;
-        private DevComponents.DotNetBar.ButtonX btnStopRecord;
-        private DevComponents.DotNetBar.ButtonX btnSaveSignals;
-        private DevComponents.DotNetBar.ButtonX btnNextTestSequence;
-        private DevComponents.DotNetBar.ButtonX btnPauseTestSequence;
-        private DevComponents.DotNetBar.ButtonX btnStartTestSequence;
-        private DevComponents.DotNetBar.ButtonX btnResumeTestSequence;
-        private DevComponents.DotNetBar.ButtonX btnStopTestSequence;
-        private DevComponents.DotNetBar.SuperTabControl superTabControl1;
-        private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel3;
-        private DevComponents.DotNetBar.SuperTabItem tbCommand;
-        private DevComponents.DotNetBar.SuperTabItem tbParameters;
-        private DevComponents.DotNetBar.ButtonX btnChangeEdgeNode;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnConnectClient;
+        private System.Windows.Forms.Button btnDisconnectClient;
+        private System.Windows.Forms.TextBox tbEdgeNodeId;
+        private System.Windows.Forms.TextBox tbGroupId;
+        private System.Windows.Forms.TextBox tbScadaId;
+        private System.Windows.Forms.TextBox tbClientId;
+        private System.Windows.Forms.TextBox tbPassword;
+        private System.Windows.Forms.TextBox tbUser;
+        private System.Windows.Forms.TextBox ipAddressInput1;
+        private System.Windows.Forms.TextBox iiPort;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.Button btnDisconnect;
+        private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.Button btnPause;
+        private System.Windows.Forms.Button btnContinue;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnStartRecord;
+        private System.Windows.Forms.Button btnStopRecord;
+        private System.Windows.Forms.Button btnSaveSignals;
+        private System.Windows.Forms.Button btnStartTestSequence;
+        private System.Windows.Forms.Button btnNextTestSequence;
+        private System.Windows.Forms.Button btnPauseTestSequence;
+        private System.Windows.Forms.Button btnResumeTestSequence;
+        private System.Windows.Forms.Button btnStopTestSequence;
+        private System.Windows.Forms.Button btnChangeEdgeNode;
     }
 }

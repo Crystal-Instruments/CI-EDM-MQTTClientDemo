@@ -17,7 +17,6 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Threading;
 using System.Diagnostics;
-using DevComponents.DotNetBar;
 using MQTTnet.Client.Disconnecting;
 using MQTTnet.Client.Connecting;
 using System.Web.UI.Design;
@@ -30,11 +29,11 @@ namespace sparkplugDemo
         private const string setCommandNodeInstructions = "Set Command Node Id Using TextBox Below";
 
         private string BrokerAddress {
-            get { return ipAddressInput1.Value; }
+            get { return ipAddressInput1.Text; }
         }
         private int BrokerPort
         {
-            get { return iiPort.Value; }
+            get { return Convert.ToInt32(iiPort.Text); }
         }
 
         private string ClientId
@@ -74,7 +73,7 @@ namespace sparkplugDemo
 
         private string EdgeNodeId
         {
-            get { return tbScadaId.Text; }
+            get { return tbEdgeNodeId.Text; }
         }
 
         private string CommandNodeId
@@ -163,7 +162,7 @@ namespace sparkplugDemo
 
         private void OnChangeEdgeNodeClicked(object sender, EventArgs e)
         {
-            ButtonX btnSender = sender as ButtonX;
+            Button btnSender = sender as Button;
             if (btnSender == null)
             {
                 return;
@@ -198,7 +197,7 @@ namespace sparkplugDemo
 
         private void OnListGlobalParameters(object sender, EventArgs e)
         {
-            ButtonX btnSender = sender as ButtonX;
+            Button btnSender = sender as Button;
             if (btnSender == null || btnSender.Tag == null || !application.IsConnected)
             {
                 return;
@@ -210,7 +209,7 @@ namespace sparkplugDemo
 
         private void OnButtonClicked(object sender, EventArgs e)
         {
-            ButtonX btnSender = sender as ButtonX;
+            Button btnSender = sender as Button;
             if (btnSender == null || btnSender.Tag == null || !application.IsConnected)
             {
                 return;
