@@ -7,7 +7,7 @@ using SparkplugNet.VersionB.Data;
 using System.IO;
 using MQTTnet.Channel;
 
-namespace sparkplugDemo
+namespace MQTTSparkplugDemo
 {
     public static class MetricNames
     {

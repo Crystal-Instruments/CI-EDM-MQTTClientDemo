@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -35,7 +35,7 @@
   <ItemGroup>
     <Reference Include="MQTTnet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\MQTTnet.dll</HintPath>
+      <HintPath>..\..\..\..\EDM\bin\MQTTnet.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -43,13 +43,17 @@
     </Reference>
     <Reference Include="SparkplugNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\EDM\bin\AnyCPU\Debug\Share\SparkplugNet.dll</HintPath>
+      <HintPath>..\..\EDM\bin\SparkplugNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,12 +62,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SparkplugDemo.cs" />
+    <Compile Include="ChangeCommandEdgeNodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeCommandEdgeNodeForm.Designer.cs">
+      <DependentUpon>ChangeCommandEdgeNodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MQTTSparkplugExample.cs" />
+    <Compile Include="MQTTSparkplugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MQTTSparkplugForm.Designer.cs">
+      <DependentUpon>MQTTSparkplugForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MQTTSparkplugSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SparkplugSupport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ChangeCommandEdgeNodeForm.resx">
+      <DependentUpon>ChangeCommandEdgeNodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MQTTSparkplugForm.resx">
+      <DependentUpon>MQTTSparkplugForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
