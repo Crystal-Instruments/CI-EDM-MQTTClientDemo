@@ -41,6 +41,11 @@ namespace MQTTCSharpExample
         /// Drive bar mass, horizontal only.
         /// </summary>
         public double DriveBarMass;
+    }
 
+    public struct MQTTMassParameters
+    {
+        public double UUTMass;
+        public double FixtureMass;
     }
 }

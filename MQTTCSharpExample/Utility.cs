@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Security.Authentication;
 using MQTTnet.Formatter;
 using System.Windows.Forms;
@@ -10,11 +9,9 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Drawing;
 using System.Collections.Concurrent;
-using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Globalization;
-using System.Security.Cryptography;
 using System.IO.Compression;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -484,7 +481,7 @@ namespace MQTTCSharpExample
         public const string PeakValue = nameof(PeakValue);
 
         static DataTable Datas;
-        static long loopCount = 1;
+        //static long loopCount = 1;
         static PeakValueHandler()
         {
             Datas = new DataTable();
@@ -530,7 +527,7 @@ namespace MQTTCSharpExample
 
         public static void Clear()
         {
-            loopCount = 1;
+            //loopCount = 1;
             Datas.Rows.Clear();
             PeakFrequencies.Clear();
             PeakValues.Clear();
@@ -586,7 +583,7 @@ namespace MQTTCSharpExample
                 //    Trace.WriteLine($"{d.Key.ToString("HH:mm:ss.fff")},{d.Value.Value}");
                 //}
                 //Trace.WriteLine("");
-                loopCount++;
+                //loopCount++;
 #endif
 
 

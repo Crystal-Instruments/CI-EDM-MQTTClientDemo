@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Security.Authentication;
 using MQTTnet.Client.Publishing;
 using MQTTnet.Client.Unsubscribing;
-using System.Threading;
 using MQTTnet.Adapter;
 using MQTTnet.Client.Disconnecting;
 using System.Diagnostics;

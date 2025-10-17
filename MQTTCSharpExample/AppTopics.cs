@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MQTTCSharpExample
+﻿namespace MQTTCSharpExample
 {
     public static class AppTopics
     {
@@ -18,6 +12,8 @@ namespace MQTTCSharpExample
 
         public const string TOPIC_APP_TEST = "App/Test";//d
         public const string TOPIC_APP_TEST_COMMAND = "App/Test/Command";//d
+        public const string TOPIC_APP_TEST_COMMANDEX = "App/Test/CommandEx";//d
+
         public const string TOPIC_APP_TEST_STATUS = "App/Test/Status";//d
         public const string TOPIC_APP_TEST_LIMITSTATUS = "App/Test/LimitStatus";//d
         public const string TOPIC_APP_TEST_RECORDSTATUS = "App/Test/RecordStatus";//d
@@ -53,15 +49,20 @@ namespace MQTTCSharpExample
     public static class DSATopics
     {
         public const string TOPIC_DSA_TEST_COMMAND = "DSA/Test/Command";
+        public const string TOPIC_DSA_TEST_COMMANDEX = "DSA/Test/CommandEx";
         public const string TOPIC_DSA_TEST_DSA_STATUS = "DSA/Test/DSAStatus";
+        public const string TOPIC_DSA_TEST_TRIGGER_SETTINGS = "DSA/Test/TriggerSettings";
+        public const string TOPIC_DSA_TEST_TRIGGER_FRAME = "DSA/Test/TriggerFrame";
     }
 
     public static class VCSTopics
     {
         public const string TOPIC_VCS_TEST_COMMAND = "VCS/Test/Command";
+        public const string TOPIC_VCS_TEST_COMMANDEX = "VCS/Test/CommandEx";
         public const string TOPIC_VCS_TEST_STAGE = "VCS/Test/Stage";
         public const string TOPIC_VCS_TEST_CONTROL_UPDATED = "VCS/Test/ControlUpdated";
         public const string TOPIC_VCS_TEST_SHAKER = "VCS/Test/Shaker";
+        public const string TOPIC_VCS_TEST_MASS = "VCS/Test/Mass";
 
 
         public const string TOPIC_VCS_TEST_RANDOM_STATUS = "VCS/Test/RandomStatus";
@@ -69,14 +70,19 @@ namespace MQTTCSharpExample
         public const string TOPIC_VCS_TEST_SHOCK_STATUS = "VCS/Test/ShockStatus";
         public const string TOPIC_VCS_TEST_TWR_STATUS = "VCS/Test/TWRStatus";
 
+        public const string TOPIC_VCS_TEST_MIMO_RANDOM_STATUS = "VCS/Test/MIMORandomStatus";
+        public const string TOPIC_VCS_TEST_MIMO_SINE_STATUS = "VCS/Test/MIMOSineStatus";
+        public const string TOPIC_VCS_TEST_MIMO_SHOCK_STATUS = "VCS/Test/MIMOShockStatus";
+        public const string TOPIC_VCS_TEST_MIMO_TWR_STATUS = "VCS/Test/MIMOTWRStatus";
 
     }
 
     public static class THVTopics
     {
         public const string TOPIC_THV_TEST_COMMAND = "THV/Test/Command";
+        public const string TOPIC_THV_TEST_COMMANDEX = "THV/Test/CommandEx";
         public const string TOPIC_THV_TEST_TH_STATUS = "THV/Test/THStatus";
-        public const string TOPIC_THV_TEST_VT_STATUS = "THV/Test/VHStatus";
+        public const string TOPIC_THV_TEST_VIB_STATUS = "THV/Test/VibStatus";
     }
 
 
@@ -148,6 +154,12 @@ namespace MQTTCSharpExample
         public const string LimitOn = nameof(LimitOn);
         public const string LimitOff = nameof(LimitOff);
 
+        public const string RequestTriggerSettings = nameof(RequestTriggerSettings);
+        public const string SetTriggerSettings = nameof(SetTriggerSettings);
+        public const string TriggerAccept = nameof(TriggerAccept);
+        public const string TriggerNext = nameof(TriggerNext);
+        public const string TriggerReject = nameof(TriggerReject);
+
         //vcs
         public const string CheckOnly = nameof(CheckOnly);
         public const string Proceed = nameof(Proceed);
@@ -203,8 +215,15 @@ namespace MQTTCSharpExample
         public const string SetSchedule = nameof(SetSchedule);
         public const string SetInputRange = nameof(SetInputRange);
 
+        public const string SetSimpleRandomProfile = nameof(SetSimpleRandomProfile);
+        public const string SetSimpleSineProfile = nameof(SetSimpleSineProfile);
+        public const string SetSimpleShockProfile = nameof(SetSimpleShockProfile);
+
         public const string RequestPeakFrequency = nameof(RequestPeakFrequency);
         public const string RequestPeakValue = nameof(RequestPeakValue);
+
+        public const string RequestShakerParameters = nameof(RequestShakerParameters);
+        public const string SetShakerParameters = nameof(SetShakerParameters);
 
         //Test Sequence (FAT)
         public const string StartTestSequence = nameof(StartTestSequence);
@@ -219,7 +238,7 @@ namespace MQTTCSharpExample
         //thv
     }
 
-    public static class MQTTCommand
+    public static class MQTTCommonCommand
     {
         public const string CMD_MQTT_PUBLISH = nameof(CMD_MQTT_PUBLISH);
         public const string CMD_MQTT_START = nameof(CMD_MQTT_START);

@@ -20,16 +20,13 @@ namespace MQTTCSharpExample
     }
 
 
-    public struct MQTTVTStatus
+    public struct MQTTVibStatus
     {
         public string Timestamp;
         public double TotalTime;
         public double RemainTime;
-        public double TargetTemperature;
-        public double ControlTemperature;      
         public double TargetVibration;
         public double ControlVibration;
-        public List<MQTTTemperatureStatus> LatestTemperatures;
         public List<MQTTVibrationStatus> LatestVibrations;
     }
 
