@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph;
 using Newtonsoft.Json.Linq;
+using System.Resources;
 
 namespace MQTTCSharpExample
 {
@@ -169,7 +170,12 @@ namespace MQTTCSharpExample
             tbFileDir.Text = tbReportDir.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             tbClientID.Text = $"EDM-MQTT-Example-Client-{Guid.NewGuid().ToString().ToUpper()}";
             PeakValueHandler.TimeMatchOffset = (int)Settings.Default.TimestampMatchOffset;
-          
+
+            foreach (var ip in Utility.GetBroadcastNetworkInterfaces())
+            {
+                selectIPToolStripMenuItem.DropDownItems.Add($"{ip.Value.Address}-[{ip.Key.Name}]",null,onClick: (s, e) => { tbBrokerIP.Text = ip.Value.Address.ToString(); });
+            }
+
         }
         void LoadComboBoxSetting(ComboBox cbx, string[] dataSource, string defaultVal, EventHandler h)
         {
@@ -199,6 +205,10 @@ namespace MQTTCSharpExample
             Model.Protocol = ProtocolOptions.ToProtocol(Settings.Default.Protocol);
             Model.SslProtocal = TLSOptions.ToProtocol(Settings.Default.TLS);
             Model.SoftwareMode = "MQTTClient";
+
+            Model.CACertificateFile = Settings.Default.CACertificateFile;
+            Model.ClientCertificateFile = Settings.Default.ClientCertificateFile;
+            Model.ClientCertificatePrivateKeyFile = Settings.Default.ClientCertificatePrivateKeyFile;
         }
         void SaveTLSSettings()
         {
@@ -308,6 +318,7 @@ namespace MQTTCSharpExample
             await Task.Factory.StartNew(() =>
             {
                 btnDisconnect.Enabled = false;
+                selectIPToolStripMenuItem.Enabled = true;
                 btnConnect.Enabled = true;
                 tlpConnection.Enabled = true;
 
@@ -352,6 +363,7 @@ namespace MQTTCSharpExample
                 await Task.Factory.StartNew(() =>
                 {
                     btnDisconnect.Enabled = true;
+                    selectIPToolStripMenuItem.Enabled = false;
                     btnConnect.Enabled = false;
                     tlpConnection.Enabled = false;
                     tsConnectionStatus.Text = "Connected";
@@ -393,6 +405,15 @@ namespace MQTTCSharpExample
                     var app = Utility.JsonDeserialize<MQTTSystemStatus>(msg.Payload);
                     lblSystemName.Text = app.Name;
                     lblSystemStatus.Text = app.Status;
+                }
+                else if(msg.Topic.EndsWith(AppTopics.TOPIC_APP_SYSTEM_TIMESTATUS))
+                {
+                    var app = Utility.JsonDeserialize<List<MQTTDeviceTimeStatus>>(msg.Payload).FirstOrDefault();
+                    if(app.Year > 0)
+                    {
+                        lblNTPTime.Visible = true;
+                        lblNTPTime.Text = $"{app.Year}/{app.Month:d2}/{app.Day:d2} {app.Hour:d2}:{app.Minute:d2}:{app.Second:d2} {app.Millisecond:d3}ms,{app.Microsecond:d3}µs";
+                    }
                 }
                 else if (msg.Topic.EndsWith(DSATopics.TOPIC_DSA_TEST_DSA_STATUS))
                 {
@@ -581,6 +602,33 @@ namespace MQTTCSharpExample
                         lvChannelTable.EndUpdate();
                     }
                 }
+                else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_CHANNELSTATUS))
+                {
+                    var app = Utility.JsonDeserialize<List<MQTTChannelStatus>>(msg.Payload);
+
+                    try
+                    {   
+                        lvChannelStatus.BeginUpdate();
+                        lvChannelStatus.Items.Clear();
+                        foreach (var m in app)
+                        {
+                            var lvi = new ListViewItem(m.LocationId);
+                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, m.Min.ToString("f5")));
+                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, m.Max.ToString("f5")));
+                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, m.Peak.ToString("f5")));
+                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, m.RMS.ToString("f5")));
+                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, m.Average.ToString("f5")));
+                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, m.IsIEPE.ToString()));
+                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, m.IsOverload.ToString()));
+                            lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, m.IsStrainGageNotConnected.ToString()));
+                            lvChannelStatus.Items.Add(lvi);
+                        }
+                    }
+                    finally
+                    {
+                        lvChannelStatus.EndUpdate();
+                    }
+                }
                 else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_PARAMETERS))
                 {
                     var app = Utility.JsonDeserialize<Dictionary<string, object>>(msg.Payload);
@@ -751,6 +799,38 @@ namespace MQTTCSharpExample
 
                     lblRecordStatus.Text = app.Status;
                     lblRecordName.Text = app.Name;
+                }
+                else if(msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_REPORTNOTES))
+                {
+                    var app = Utility.JsonDeserialize<MQTTReportNote[]>(msg.Payload);
+                  
+
+                    try
+                    {
+                        lvReportNotes.BeginUpdate();
+
+                        try
+                        {
+
+                            lvReportNotes.BeginUpdate();
+                            lvReportNotes.Items.Clear();
+                            foreach (var kp in app)
+                            {
+                                var lvi = new ListViewItem(kp.Name);
+                                lvi.SubItems.Add(new ListViewItem.ListViewSubItem(lvi, kp.Content));
+                                lvReportNotes.Items.Add(lvi);
+                            }
+                        }
+                        finally
+                        {
+                            lvReportNotes.EndUpdate();
+                        }
+
+                    }
+                    finally
+                    {
+                        lvReportNotes.EndUpdate();
+                    }
                 }
                 else if (msg.Topic.EndsWith(AppTopics.TOPIC_APP_TEST_REPORTFILE))
                 {
@@ -1381,6 +1461,25 @@ namespace MQTTCSharpExample
                 {
                     PublishWithValue(GetOutputSettings());
                 }
+                else if(btn == btnSetReportNotes)
+                {
+                    if (lvReportNotes.Items.Count > 0)
+                    {
+                        PublishWithValue(GetReportNotes());
+                    }
+                }
+                else if(btn == btnShutdownPC)
+                {
+                    PublishWithValue(nudShutdownPCDelay.Value);
+                }
+                else if(btn == btnSetInputRange)
+                {
+                    PublishWithValue($"{cbxInputRange.SelectedItem};{nudChannelIndex.Value}");
+                }
+                else if(btn == btnSetNTP)
+                {
+                    PublishWithValue($"{tbNTPServer.Text};{nudNTPPort.Value};{nudNTPSynchInterval.Value}");
+                }
                 else
                 {
                     PublishCommand();
@@ -1428,7 +1527,17 @@ namespace MQTTCSharpExample
             }
         }
 
+        string GetReportNotes()
+        {
+            List<MQTTReportNote> notes = new List<MQTTReportNote>();
 
+            foreach(var item in lvReportNotes.Items.OfType<ListViewItem>())
+            {
+                notes.Add(new MQTTReportNote() { Name = item.Text, Content = item.SubItems[1].Text });
+            }
+
+            return Utility.JsonSerializer(notes.ToArray());
+        }
 
         private void OnSelectAll(object sender, EventArgs e)
         {
@@ -1647,7 +1756,7 @@ namespace MQTTCSharpExample
                     cmd = CommandKey.SetSchedule;
                     profile = File.ReadAllText(tbSchedulePath.Text);
                 }
-
+             
                 if (Client.IsConnected && !string.IsNullOrWhiteSpace(cmd) && !string.IsNullOrWhiteSpace(profile))
                 {
                     var options = new PublishOptionsModel()
@@ -1825,6 +1934,142 @@ namespace MQTTCSharpExample
             zedGraphControl1.GraphPane.CurveList.Clear();
         }
 
+        private void OnReportNotesSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(lvReportNotes.SelectedItems.Count > 0)
+            {
+                var item = lvReportNotes.SelectedItems.OfType<ListViewItem>().First();
+
+                if (item != null)
+                {
+                    tbReportNoteName.Text = item.Text;
+                    tbReportNoteContent.Text = item.SubItems[1].Text;
+                }
+            }
+           
+        }
+
+        private void OnUpdateReportNote(object sender, EventArgs e)
+        {
+            try
+            {
+                lvReportNotes.BeginUpdate();
+
+                foreach (var item in lvReportNotes.Items.OfType<ListViewItem>())
+                {
+                    if (item.Text == tbReportNoteName.Text)
+                    {
+                        item.SubItems[1].Text = tbReportNoteContent.Text;
+
+                        break;
+                    }
+                }
+            }
+            finally
+            {
+                lvReportNotes.EndUpdate();
+            }
+        }
+
+        private void OnAddReportNote(object sender, EventArgs e)
+        {
+            try
+            {
+                lvReportNotes.BeginUpdate();
+                bool asUpdate = false;
+                foreach (var item in lvReportNotes.Items.OfType<ListViewItem>())
+                {
+                    if (item.Text == tbReportNoteName.Text)
+                    {
+                        item.SubItems[1].Text = tbReportNoteContent.Text;
+                        asUpdate = true;
+
+                        break;
+                    }
+                }
+
+               if(!asUpdate)
+                {
+                    ListViewItem lvi = new ListViewItem(tbReportNoteName.Text);
+                    lvi.SubItems.Add(tbReportNoteContent.Text);
+                    lvReportNotes.Items.Add(lvi);
+                }
+            }
+            finally
+            {
+                lvReportNotes.EndUpdate();
+            }
+        }
+
+        private void OnDeleteReportNote(object sender, EventArgs e)
+        {
+            try
+            {
+                lvReportNotes.BeginUpdate();
+
+                ListViewItem lviRemove = null;
+                foreach (var item in lvReportNotes.Items.OfType<ListViewItem>())
+                {
+                    if (item.Text == tbReportNoteName.Text)
+                    {
+                        lviRemove = item;
+
+                        break;
+                    }
+                }
+
+                if (lviRemove != null)
+                {
+
+                    lvReportNotes.Items.Remove(lviRemove);
+                }
+            }
+            finally
+            {
+                lvReportNotes.EndUpdate();
+            }
+        }
+
+        private void btnBrowseCACertificateFile_Click(object sender, EventArgs e)
+        {
+            BrowseFile(tbCACertificateFile);
+            Settings.Default.CACertificateFile = tbCACertificateFile.Text;
+            Settings.Default.Save();
+        }
+
+        private void btnBrowseClientCertificateFile_Click(object sender, EventArgs e)
+        {
+            BrowseFile(tbClientCertificateFile);
+            Settings.Default.ClientCertificateFile = tbClientCertificateFile.Text;
+            Settings.Default.Save();
+        }
+
+        private void btnBrowseClientPrivateKeyFile_Click(object sender, EventArgs e)
+        {
+            BrowseFile(tbClientPrivateKeyFile);
+            Settings.Default.ClientCertificatePrivateKeyFile = tbClientPrivateKeyFile.Text;
+            Settings.Default.Save();
+        }
+
+        private void BrowseFile(TextBox atb)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                if (atb == tbCACertificateFile || atb == tbClientCertificateFile)
+                {
+                    ofd.Filter = "Certificate file|*.crt|PEM file|*.pem";
+                }
+                else
+                {
+                    ofd.Filter = "Key file|*.key";
+                }
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    atb.Text = ofd.FileName;
+                }
+            }
+        }
     }
 
 

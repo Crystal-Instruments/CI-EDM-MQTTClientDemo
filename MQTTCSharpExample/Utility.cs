@@ -16,12 +16,38 @@ using System.IO;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.IO.Compression;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 
 namespace MQTTCSharpExample
 {
     public static class Utility
     {
-        
+        public static Dictionary<NetworkInterface, UnicastIPAddressInformation> GetBroadcastNetworkInterfaces()
+        {
+            var collection = new Dictionary<NetworkInterface, UnicastIPAddressInformation>();
+
+            foreach (var ni in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (ni.OperationalStatus == OperationalStatus.Up &&
+                        ni.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
+                        ni.NetworkInterfaceType != NetworkInterfaceType.Tunnel)
+                {
+
+                    foreach (var ipAddressInfo in ni.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ipAddressInfo.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            collection[ni] = ipAddressInfo;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return collection;
+        }
+
         public static void EnableDoubleBuffer(this Control panel)
         {
             if (panel == null) return;

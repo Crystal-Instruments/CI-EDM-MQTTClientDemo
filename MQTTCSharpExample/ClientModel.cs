@@ -17,5 +17,10 @@ namespace MQTTCSharpExample
         public int KeepAliveInterval { get; set; }
         public bool CleanSession { get; set; }  
         public string SoftwareMode { get; set; }
+
+        //Cert related        
+        public string ClientCertificatePrivateKeyFile { get; set; }
+        public string ClientCertificateFile { get; set; }
+        public string CACertificateFile { get; set; }
     }
 }

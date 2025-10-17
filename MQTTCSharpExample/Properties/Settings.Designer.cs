@@ -12,7 +12,7 @@ namespace MQTTExample.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -61,7 +61,7 @@ namespace MQTTExample.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("admin")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Admin")]
         public string UserName {
             get {
                 return ((string)(this["UserName"]));
@@ -73,7 +73,7 @@ namespace MQTTExample.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("admin")]
+        [global::System.Configuration.DefaultSettingValueAttribute("123456")]
         public string Password {
             get {
                 return ((string)(this["Password"]));
@@ -164,6 +164,42 @@ namespace MQTTExample.Properties {
             }
             set {
                 this["TimestampMatchOffset"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CACertificateFile {
+            get {
+                return ((string)(this["CACertificateFile"]));
+            }
+            set {
+                this["CACertificateFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ClientCertificateFile {
+            get {
+                return ((string)(this["ClientCertificateFile"]));
+            }
+            set {
+                this["ClientCertificateFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ClientCertificatePrivateKeyFile {
+            get {
+                return ((string)(this["ClientCertificatePrivateKeyFile"]));
+            }
+            set {
+                this["ClientCertificatePrivateKeyFile"] = value;
             }
         }
     }

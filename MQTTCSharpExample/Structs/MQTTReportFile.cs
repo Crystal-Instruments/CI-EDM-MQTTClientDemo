@@ -16,4 +16,10 @@ namespace MQTTCSharpExample
     {
         public string[] Templates;
     }
+
+    public struct MQTTReportNote
+    {
+        public string Name;
+        public string Content;
+    }
 }

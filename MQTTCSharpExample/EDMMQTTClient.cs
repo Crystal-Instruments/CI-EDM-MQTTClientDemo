@@ -13,6 +13,16 @@ using System.Threading;
 using MQTTnet.Adapter;
 using MQTTnet.Client.Disconnecting;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
+using System.IO;
+using Org.BouncyCastle.X509;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Pkcs;
+using Org.BouncyCastle.Security;
+using System.Text;
+using X509Certificate = System.Security.Cryptography.X509Certificates.X509Certificate;
 
 namespace MQTTCSharpExample
 {
@@ -51,7 +61,6 @@ namespace MQTTCSharpExample
                 .WithCommunicationTimeout(TimeSpan.FromSeconds(model.CommunicationTimeout))
                 .WithProtocolVersion(model.Protocol)
                 .WithClientId(model.ClientId)
-                .WithCredentials(model.User, model.Password)
                 .WithKeepAlivePeriod(TimeSpan.FromSeconds(model.KeepAliveInterval));
 
             if (model.Transport == Transport.TCP)
@@ -63,13 +72,59 @@ namespace MQTTCSharpExample
                 clientOptionsBuilder.WithWebSocketServer(model.Host);
             }
 
+            if (model.CleanSession)
+            {
+                clientOptionsBuilder.WithCleanSession(model.CleanSession);
+            }
+
+            var isNeedCredential = true;
+
             if (model.SslProtocal != SslProtocols.None)
             {
-                clientOptionsBuilder.WithTls(o =>
+                var certs = new List<X509Certificate>();
+
+                if (!string.IsNullOrWhiteSpace(model.CACertificateFile) && File.Exists(model.CACertificateFile))
                 {
-                    o.SslProtocol = model.SslProtocal;
-                });
+                    var certificateAuthorityCertPEMString = File.ReadAllText(model.CACertificateFile);
+                    var certBytes = Encoding.UTF8.GetBytes(certificateAuthorityCertPEMString);
+                    var signingcert = new X509Certificate2(certBytes);
+                    certs.Add(signingcert);
+                }
+
+                if (!string.IsNullOrWhiteSpace(model.ClientCertificateFile) && !string.IsNullOrWhiteSpace(model.ClientCertificatePrivateKeyFile)
+                    && File.Exists(model.ClientCertificateFile) && File.Exists(model.ClientCertificatePrivateKeyFile))
+                {
+                    var clientCert = createCertificate(model.ClientCertificateFile, model.ClientCertificatePrivateKeyFile);
+                    certs.Add(clientCert);
+                }
+
+                if (certs.Count > 0)
+                {
+                    isNeedCredential = false;
+                    clientOptionsBuilder.WithTls(o =>
+                    {
+                        o.SslProtocol = model.SslProtocal;
+                        o.UseTls = true;
+                        o.AllowUntrustedCertificates = true;
+                        o.Certificates = certs;
+                        o.CertificateValidationHandler = auth;
+                    });
+                }
+                else
+                {
+                    clientOptionsBuilder.WithTls(o =>
+                    {
+                        o.SslProtocol = model.SslProtocal;
+                        o.UseTls = true;
+                    });
+                }
             }
+
+            if (isNeedCredential)
+            {
+                clientOptionsBuilder.WithCredentials(model.User, model.Password);
+            }
+
 
             try
             {
@@ -86,6 +141,35 @@ namespace MQTTCSharpExample
             {
                 Trace.WriteLine(ex.ToString());
                 return MqttClientConnectResultCode.UnspecifiedError;
+            }
+
+
+            bool auth(MqttClientCertificateValidationCallbackContext cc) => true;
+
+            X509Certificate2 createCertificate(string certificatePath, string keyPath)
+            {
+                var certParser = new X509CertificateParser();
+                var cert = certParser.ReadCertificate(File.ReadAllBytes(certificatePath));
+
+                using (var reader = new StreamReader(keyPath))
+                {
+                    var pemReader = new PemReader(reader);
+                    var keyPair = (AsymmetricCipherKeyPair)pemReader.ReadObject();
+
+                    var builder = new Pkcs12StoreBuilder();
+                    builder.SetUseDerEncoding(true);
+                    var store = builder.Build();
+
+                    var certEntry = new X509CertificateEntry(cert);
+                    store.SetCertificateEntry(cert.SubjectDN.ToString(), certEntry);
+                    store.SetKeyEntry(cert.SubjectDN.ToString(), new AsymmetricKeyEntry(keyPair.Private), new[] { certEntry });
+
+                    using (var stream = new MemoryStream())
+                    {
+                        store.Save(stream, null, new SecureRandom());
+                        return new X509Certificate2(stream.ToArray());
+                    }
+                }
             }
         }
 

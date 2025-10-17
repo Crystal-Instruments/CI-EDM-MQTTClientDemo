@@ -27,4 +27,17 @@ namespace MQTTCSharpExample
         public string DeviceType;
         public string Version;
     }
+
+    public struct MQTTDeviceTimeStatus
+    {
+        public string SerialNumber;
+        public int Year;
+        public int Month;
+        public int Day;
+        public int Hour;
+        public int Minute;
+        public int Second;
+        public int Millisecond;
+        public int Microsecond;
+    }
 }

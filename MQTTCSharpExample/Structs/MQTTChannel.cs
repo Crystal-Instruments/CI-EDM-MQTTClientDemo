@@ -75,4 +75,35 @@ namespace MQTTCSharpExample
         public string ControlWeighting;
     }
 
+
+    public struct MQTTChannelStatus
+    {
+        public float Min;
+        public float Max;
+        public float Peak;
+        public float RMS;
+        public float Average;
+        public float MaxPeak;
+        public float MaxRms;
+        public float VelPeak;
+        public float DisplPeak;
+        public int MaxInputRange;//Max Input Range in mV
+
+        public bool IsIEPE; //IEPE enabled
+        public bool IsOverload; //Channel overload
+        public bool IsIEPEWithSensor; //IEPE enabled and sensor detected; IEPE sensor not detected
+        public bool IsStrainGageNotConnected;
+        public bool IsSensorOverload; //Sensor overload
+        public bool IsFailed; //Channel Failed 
+
+        public string Unit;
+        public string LocationId;
+        public string VelUnit;
+        public string DisplUnit;
+
+        public string ChannelLost; //Channel lost(all test types except VCS or MIMO VCS); Control/Monitor/Limit Channel Lost (For VCS, MIMO VCS only)
+        public string LimitExceed; //Abort/Alarm Limit Exceeded
+        public string Notching; //Notching (For VCS Only) 
+    }
+
 }
