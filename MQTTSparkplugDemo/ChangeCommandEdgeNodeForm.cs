@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace sparkplugDemo
+namespace MQTTSparkplugDemo
 {
     public partial class ChangeCommandEdgeNodeForm : Form
     {

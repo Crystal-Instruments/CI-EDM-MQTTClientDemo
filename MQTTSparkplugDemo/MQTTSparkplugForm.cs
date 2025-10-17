@@ -21,9 +21,9 @@ using MQTTnet.Client.Disconnecting;
 using MQTTnet.Client.Connecting;
 using System.Web.UI.Design;
 
-namespace sparkplugDemo
+namespace MQTTSparkplugDemo
 {
-    public partial class SparkplugForm : Form
+    public partial class MQTTSparkplugForm : Form
     {
         private SparkplugApplication application;
         private const string setCommandNodeInstructions = "Set Command Node Id Using TextBox Below";
@@ -88,7 +88,7 @@ namespace sparkplugDemo
             get { return applicationMetrics; }
         }
 
-        public SparkplugForm()
+        public MQTTSparkplugForm()
         {
             applicationMetrics = new List<Metric>();
             InitializeComponent();

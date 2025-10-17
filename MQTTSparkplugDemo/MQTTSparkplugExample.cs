@@ -20,9 +20,9 @@ using Serilog.Formatting.Display;
 using MQTTnet;
 using Serilog;
 
-namespace sparkplugDemo
+namespace MQTTSparkplugDemo
 {
-    internal class SparkplugDemo
+    internal class MQTTSparkplugExample
     {
         private const string brokerAddress = "192.168.1.19";
         private const int brokerPort = 1883;
@@ -40,7 +40,7 @@ namespace sparkplugDemo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SparkplugForm());
+            Application.Run(new MQTTSparkplugForm());
         }
     }
 }

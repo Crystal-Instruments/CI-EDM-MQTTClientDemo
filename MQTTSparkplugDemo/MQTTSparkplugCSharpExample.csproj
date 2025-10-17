@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;GUI</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -43,7 +43,7 @@
     </Reference>
     <Reference Include="SparkplugNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\EDM\bin\AnyCPU\Debug\Share\SparkplugNet.dll</HintPath>
+      <HintPath>..\..\EDM\bin\SparkplugNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -68,15 +68,15 @@
     <Compile Include="ChangeCommandEdgeNodeForm.Designer.cs">
       <DependentUpon>ChangeCommandEdgeNodeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SparkplugDemo.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SparkplugForm.cs">
+    <Compile Include="MQTTSparkplugExample.cs" />
+    <Compile Include="MQTTSparkplugForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SparkplugForm.Designer.cs">
-      <DependentUpon>SparkplugForm.cs</DependentUpon>
+    <Compile Include="MQTTSparkplugForm.Designer.cs">
+      <DependentUpon>MQTTSparkplugForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SparkplugSupport.cs" />
+    <Compile Include="MQTTSparkplugSupport.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -85,8 +85,8 @@
     <EmbeddedResource Include="ChangeCommandEdgeNodeForm.resx">
       <DependentUpon>ChangeCommandEdgeNodeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SparkplugForm.resx">
-      <DependentUpon>SparkplugForm.cs</DependentUpon>
+    <EmbeddedResource Include="MQTTSparkplugForm.resx">
+      <DependentUpon>MQTTSparkplugForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

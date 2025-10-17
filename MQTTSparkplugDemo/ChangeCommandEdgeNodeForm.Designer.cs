@@ -1,4 +1,4 @@
-﻿namespace sparkplugDemo
+﻿namespace MQTTSparkplugDemo
 {
     partial class ChangeCommandEdgeNodeForm
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTSparkplugDemo", "sparkplugDemo\MQTTSparkplugDemo.csproj", "{FC4420B0-FA07-4598-AA2F-2C310A3FC561}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTSparkplugCSharpExample", "MQTTSparkplugCSharpExample.csproj", "{FC4420B0-FA07-4598-AA2F-2C310A3FC561}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {178B971C-7E4F-41DE-B121-CDD9CBC0736E}
+		SolutionGuid = {7184E1B8-06BC-4A08-8200-503E2C490405}
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,6 @@
-﻿namespace sparkplugDemo
+﻿namespace MQTTSparkplugDemo
 {
-    partial class SparkplugForm
+    partial class MQTTSparkplugForm
     {
         /// <summary>
         /// Required designer variable.
@@ -563,13 +563,13 @@
             this.panel2.Size = new System.Drawing.Size(1050, 805);
             this.panel2.TabIndex = 0;
             // 
-            // SparkplugForm
+            // MQTTSparkplugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 837);
             this.Controls.Add(this.tabControl2);
-            this.Name = "SparkplugForm";
+            this.Name = "MQTTSparkplugForm";
             this.Text = "MQTT Sparkplug Demo";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tlpClientSetting.ResumeLayout(false);
