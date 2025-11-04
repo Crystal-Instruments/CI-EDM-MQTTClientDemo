@@ -280,52 +280,43 @@
             // 
             // tlpClientSetting
             // 
-            this.tlpClientSetting.ColumnCount = 4;
-            this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpClientSetting.ColumnCount = 3;
+            this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tlpClientSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tlpClientSetting.Controls.Add(this.label1, 0, 0);
-            this.tlpClientSetting.Controls.Add(this.label2, 0, 2);
-            this.tlpClientSetting.Controls.Add(this.label3, 0, 4);
-            this.tlpClientSetting.Controls.Add(this.label4, 0, 5);
-            this.tlpClientSetting.Controls.Add(this.label5, 0, 10);
-            this.tlpClientSetting.Controls.Add(this.label6, 0, 13);
-            this.tlpClientSetting.Controls.Add(this.label7, 0, 14);
-            this.tlpClientSetting.Controls.Add(this.label8, 0, 15);
-            this.tlpClientSetting.Controls.Add(this.btnConnectClient, 0, 16);
-            this.tlpClientSetting.Controls.Add(this.btnDisconnectClient, 1, 16);
-            this.tlpClientSetting.Controls.Add(this.tbEdgeNodeId, 1, 15);
-            this.tlpClientSetting.Controls.Add(this.tbGroupId, 1, 14);
-            this.tlpClientSetting.Controls.Add(this.tbScadaId, 1, 13);
-            this.tlpClientSetting.Controls.Add(this.tbClientId, 1, 10);
-            this.tlpClientSetting.Controls.Add(this.tbPassword, 1, 5);
+            this.tlpClientSetting.Controls.Add(this.label2, 0, 1);
+            this.tlpClientSetting.Controls.Add(this.label3, 0, 2);
+            this.tlpClientSetting.Controls.Add(this.label4, 0, 3);
+            this.tlpClientSetting.Controls.Add(this.label5, 0, 4);
+            this.tlpClientSetting.Controls.Add(this.label6, 0, 5);
+            this.tlpClientSetting.Controls.Add(this.label7, 0, 6);
+            this.tlpClientSetting.Controls.Add(this.label8, 0, 7);
+            this.tlpClientSetting.Controls.Add(this.btnConnectClient, 0, 8);
+            this.tlpClientSetting.Controls.Add(this.btnDisconnectClient, 1, 8);
+            this.tlpClientSetting.Controls.Add(this.tbEdgeNodeId, 1, 7);
+            this.tlpClientSetting.Controls.Add(this.tbGroupId, 1, 6);
+            this.tlpClientSetting.Controls.Add(this.tbScadaId, 1, 5);
+            this.tlpClientSetting.Controls.Add(this.tbClientId, 1, 4);
+            this.tlpClientSetting.Controls.Add(this.tbPassword, 1, 3);
             this.tlpClientSetting.Controls.Add(this.ipAddressInput1, 1, 0);
-            this.tlpClientSetting.Controls.Add(this.iiPort, 1, 2);
-            this.tlpClientSetting.Controls.Add(this.tbUser, 1, 4);
+            this.tlpClientSetting.Controls.Add(this.iiPort, 1, 1);
+            this.tlpClientSetting.Controls.Add(this.tbUser, 1, 2);
             this.tlpClientSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpClientSetting.Location = new System.Drawing.Point(0, 0);
             this.tlpClientSetting.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tlpClientSetting.Name = "tlpClientSetting";
-            this.tlpClientSetting.RowCount = 18;
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
-            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 539F));
+            this.tlpClientSetting.RowCount = 10;
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.819277F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.819277F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.819277F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.819277F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.819277F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.819277F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.819277F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.819277F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.819277F));
+            this.tlpClientSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 56.62651F));
             this.tlpClientSetting.Size = new System.Drawing.Size(1050, 805);
             this.tlpClientSetting.TabIndex = 1;
             // 
@@ -336,7 +327,7 @@
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 26);
+            this.label1.Size = new System.Drawing.Size(99, 38);
             this.label1.TabIndex = 30;
             this.label1.Text = "Broker IP";
             // 
@@ -345,9 +336,9 @@
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(3, 26);
+            this.label2.Location = new System.Drawing.Point(3, 38);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 26);
+            this.label2.Size = new System.Drawing.Size(99, 38);
             this.label2.TabIndex = 31;
             this.label2.Text = "Broker Port";
             // 
@@ -356,9 +347,9 @@
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(3, 52);
+            this.label3.Location = new System.Drawing.Point(3, 76);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 26);
+            this.label3.Size = new System.Drawing.Size(99, 38);
             this.label3.TabIndex = 32;
             this.label3.Text = "User name";
             // 
@@ -367,9 +358,9 @@
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(3, 78);
+            this.label4.Location = new System.Drawing.Point(3, 114);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 26);
+            this.label4.Size = new System.Drawing.Size(99, 38);
             this.label4.TabIndex = 33;
             this.label4.Text = "Password";
             // 
@@ -378,9 +369,9 @@
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(3, 104);
+            this.label5.Location = new System.Drawing.Point(3, 152);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(98, 26);
+            this.label5.Size = new System.Drawing.Size(99, 38);
             this.label5.TabIndex = 34;
             this.label5.Text = "Client ID";
             // 
@@ -389,9 +380,9 @@
             this.label6.AutoSize = true;
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(3, 130);
+            this.label6.Location = new System.Drawing.Point(3, 190);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(98, 26);
+            this.label6.Size = new System.Drawing.Size(99, 38);
             this.label6.TabIndex = 35;
             this.label6.Text = "Scada Host ID";
             // 
@@ -400,9 +391,9 @@
             this.label7.AutoSize = true;
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(3, 156);
+            this.label7.Location = new System.Drawing.Point(3, 228);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(98, 31);
+            this.label7.Size = new System.Drawing.Size(99, 38);
             this.label7.TabIndex = 36;
             this.label7.Text = "Group Identifier";
             // 
@@ -411,18 +402,18 @@
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label8.Location = new System.Drawing.Point(3, 187);
+            this.label8.Location = new System.Drawing.Point(3, 266);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(98, 32);
+            this.label8.Size = new System.Drawing.Size(99, 38);
             this.label8.TabIndex = 37;
             this.label8.Text = "Edge Node ID";
             // 
             // btnConnectClient
             // 
             this.btnConnectClient.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnConnectClient.Location = new System.Drawing.Point(3, 222);
+            this.btnConnectClient.Location = new System.Drawing.Point(3, 307);
             this.btnConnectClient.Name = "btnConnectClient";
-            this.btnConnectClient.Size = new System.Drawing.Size(98, 41);
+            this.btnConnectClient.Size = new System.Drawing.Size(99, 32);
             this.btnConnectClient.TabIndex = 38;
             this.btnConnectClient.Text = "Connect";
             this.btnConnectClient.UseVisualStyleBackColor = true;
@@ -431,9 +422,9 @@
             // btnDisconnectClient
             // 
             this.btnDisconnectClient.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDisconnectClient.Location = new System.Drawing.Point(107, 222);
+            this.btnDisconnectClient.Location = new System.Drawing.Point(108, 307);
             this.btnDisconnectClient.Name = "btnDisconnectClient";
-            this.btnDisconnectClient.Size = new System.Drawing.Size(159, 41);
+            this.btnDisconnectClient.Size = new System.Drawing.Size(99, 32);
             this.btnDisconnectClient.TabIndex = 39;
             this.btnDisconnectClient.Text = "Disconnect";
             this.btnDisconnectClient.UseVisualStyleBackColor = true;
@@ -442,73 +433,73 @@
             // tbEdgeNodeId
             // 
             this.tbEdgeNodeId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEdgeNodeId.Location = new System.Drawing.Point(107, 190);
+            this.tbEdgeNodeId.Location = new System.Drawing.Point(108, 269);
             this.tbEdgeNodeId.Name = "tbEdgeNodeId";
-            this.tbEdgeNodeId.Size = new System.Drawing.Size(159, 20);
+            this.tbEdgeNodeId.Size = new System.Drawing.Size(99, 20);
             this.tbEdgeNodeId.TabIndex = 40;
             this.tbEdgeNodeId.Text = "EdgeNode2";
             // 
             // tbGroupId
             // 
             this.tbGroupId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbGroupId.Location = new System.Drawing.Point(107, 159);
+            this.tbGroupId.Location = new System.Drawing.Point(108, 231);
             this.tbGroupId.Name = "tbGroupId";
-            this.tbGroupId.Size = new System.Drawing.Size(159, 20);
+            this.tbGroupId.Size = new System.Drawing.Size(99, 20);
             this.tbGroupId.TabIndex = 41;
             this.tbGroupId.Text = "EDM";
             // 
             // tbScadaId
             // 
             this.tbScadaId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbScadaId.Location = new System.Drawing.Point(107, 133);
+            this.tbScadaId.Location = new System.Drawing.Point(108, 193);
             this.tbScadaId.Name = "tbScadaId";
-            this.tbScadaId.Size = new System.Drawing.Size(159, 20);
+            this.tbScadaId.Size = new System.Drawing.Size(99, 20);
             this.tbScadaId.TabIndex = 42;
             this.tbScadaId.Text = "Scada2";
             // 
             // tbClientId
             // 
             this.tbClientId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbClientId.Location = new System.Drawing.Point(107, 107);
+            this.tbClientId.Location = new System.Drawing.Point(108, 155);
             this.tbClientId.Name = "tbClientId";
-            this.tbClientId.Size = new System.Drawing.Size(159, 20);
+            this.tbClientId.Size = new System.Drawing.Size(99, 20);
             this.tbClientId.TabIndex = 43;
             this.tbClientId.Text = "SparkplugDemo";
             // 
             // tbPassword
             // 
             this.tbPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPassword.Location = new System.Drawing.Point(107, 81);
+            this.tbPassword.Location = new System.Drawing.Point(108, 117);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
-            this.tbPassword.Size = new System.Drawing.Size(159, 20);
+            this.tbPassword.Size = new System.Drawing.Size(99, 20);
             this.tbPassword.TabIndex = 44;
             this.tbPassword.Text = "123456";
             // 
             // ipAddressInput1
             // 
             this.ipAddressInput1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ipAddressInput1.Location = new System.Drawing.Point(107, 3);
+            this.ipAddressInput1.Location = new System.Drawing.Point(108, 3);
             this.ipAddressInput1.Name = "ipAddressInput1";
-            this.ipAddressInput1.Size = new System.Drawing.Size(159, 20);
+            this.ipAddressInput1.Size = new System.Drawing.Size(99, 20);
             this.ipAddressInput1.TabIndex = 47;
             this.ipAddressInput1.Text = "192.168.1.19";
             // 
             // iiPort
             // 
             this.iiPort.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iiPort.Location = new System.Drawing.Point(107, 29);
+            this.iiPort.Location = new System.Drawing.Point(108, 41);
             this.iiPort.Name = "iiPort";
-            this.iiPort.Size = new System.Drawing.Size(159, 20);
+            this.iiPort.Size = new System.Drawing.Size(99, 20);
             this.iiPort.TabIndex = 48;
             this.iiPort.Text = "1883";
             // 
             // tbUser
             // 
             this.tbUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbUser.Location = new System.Drawing.Point(107, 55);
+            this.tbUser.Location = new System.Drawing.Point(108, 79);
             this.tbUser.Name = "tbUser";
-            this.tbUser.Size = new System.Drawing.Size(159, 20);
+            this.tbUser.Size = new System.Drawing.Size(99, 20);
             this.tbUser.TabIndex = 46;
             this.tbUser.Text = "Admin";
             // 
