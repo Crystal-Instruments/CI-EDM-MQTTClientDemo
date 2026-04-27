@@ -1,25 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using SparkplugNet;
 using SparkplugNet.VersionB;
 using SparkplugNet.VersionB.Data;
 using SparkplugNet.Core.Application;
-using SparkplugNet.Core.Node;
-using SparkplugNet.Core.Enumerations;
-using SparkplugNet.Core;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Threading;
 using System.Diagnostics;
-using MQTTnet.Client.Disconnecting;
-using MQTTnet.Client.Connecting;
-using System.Web.UI.Design;
+using MQTTSparkplugCSharpExample.Properties;
+
+using MqttClientConnectedEventArgs = MQTTnet.Client.MqttClientConnectedEventArgs;
+using MqttClientDisconnectedEventArgs = MQTTnet.Client.MqttClientDisconnectedEventArgs;
 
 namespace MQTTSparkplugDemo
 {
@@ -92,6 +83,7 @@ namespace MQTTSparkplugDemo
         {
             applicationMetrics = new List<Metric>();
             InitializeComponent();
+            InitializeControls();
             InitializeTags();
             SetDisconnectedState();
             HookEvents(true);
@@ -139,6 +131,7 @@ namespace MQTTSparkplugDemo
                 btnResumeTestSequence.Click += OnButtonClicked;
                 btnStopTestSequence.Click += OnButtonClicked;
                 btnChangeEdgeNode.Click += OnChangeEdgeNodeClicked;
+                this.FormClosed += MQTTSparkplugForm_FormClosed;
             }
             else
             {
@@ -157,7 +150,70 @@ namespace MQTTSparkplugDemo
                 btnResumeTestSequence.Click -= OnButtonClicked;
                 btnStopTestSequence.Click -= OnButtonClicked;
                 btnChangeEdgeNode.Click -= OnChangeEdgeNodeClicked;
+                this.FormClosed -= MQTTSparkplugForm_FormClosed;
             }
+        }
+
+        private void InitializeControls()
+        {
+            ipAddressInput1.Text = Settings.Default.ClientIP;
+            iiPort.Text = Settings.Default.ClientPort.ToString();
+            tbUser.Text = Settings.Default.UserName;
+            tbPassword.Text = Settings.Default.Password;
+            tbClientId.Text = Settings.Default.ClientID;
+            tbScadaId.Text = Settings.Default.ScadaHostIdentifier;
+            tbGroupId.Text = Settings.Default.GroupIdentifier;
+            tbEdgeNodeId.Text = Settings.Default.EdgeNodeIdentifier;
+        }
+
+        private void MQTTSparkplugForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            bool IsControlTextEmpty(Control control)
+            { 
+                return string.IsNullOrEmpty(control.Text);
+            }
+
+            if (ipAddressInput1 != null && !IsControlTextEmpty(ipAddressInput1))
+            { 
+                Settings.Default.ClientIP = ipAddressInput1.Text;
+            }
+
+            if (iiPort != null && !IsControlTextEmpty(iiPort))
+            {
+                Settings.Default.ClientPort = Convert.ToInt32(iiPort.Text);
+            }
+
+            if (tbUser != null && !IsControlTextEmpty(tbUser))
+            {
+                Settings.Default.UserName = tbUser.Text;
+            }
+
+            if (tbPassword != null && !IsControlTextEmpty(tbPassword))
+            {
+                Settings.Default.Password = tbPassword.Text;
+            }
+
+            if (tbClientId != null && !IsControlTextEmpty(tbClientId))
+            {
+                Settings.Default.ClientID = tbClientId.Text;
+            }
+
+            if (tbScadaId != null && !IsControlTextEmpty(tbScadaId))
+            {
+                Settings.Default.ScadaHostIdentifier = tbScadaId.Text;
+            }
+
+            if (tbGroupId != null && !IsControlTextEmpty(tbGroupId))
+            {
+                Settings.Default.GroupIdentifier = tbGroupId.Text;
+            }
+
+            if (tbEdgeNodeId != null && !IsControlTextEmpty(tbEdgeNodeId))
+            {
+                Settings.Default.EdgeNodeIdentifier = tbEdgeNodeId.Text;
+            }
+
+            Settings.Default.Save();
         }
 
         private void OnChangeEdgeNodeClicked(object sender, EventArgs e)
@@ -204,13 +260,12 @@ namespace MQTTSparkplugDemo
             }
 
             OnButtonClicked(sender, e);
-            ;
         }
 
         private void OnButtonClicked(object sender, EventArgs e)
         {
             Button btnSender = sender as Button;
-            if (btnSender == null || btnSender.Tag == null || !application.IsConnected)
+            if (btnSender == null || btnSender.Tag == null || application == null || !application.IsConnected)
             {
                 return;
             }
@@ -327,9 +382,13 @@ namespace MQTTSparkplugDemo
         {
             try
             {
+                if (application != null && application.IsConnected)
+                {
+                    return;
+                }
                 application = new SparkplugApplication(ApplicationMetrics);
-                            application.OnDisconnected += OnDisconnected;
-            application.OnConnected += OnConnected;
+                application.OnDisconnected += OnDisconnected;
+                application.OnConnected += OnConnected;
 
                 CancellationTokenSource tokenSrc = new CancellationTokenSource();
                 CancellationToken ct = tokenSrc.Token;

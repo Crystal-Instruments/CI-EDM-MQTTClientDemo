@@ -101,6 +101,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblCurrentEdgeNode);
             this.Controls.Add(this.lblInstructions);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ChangeCommandEdgeNodeForm";
             this.ShowIcon = false;
             this.Text = "Change Edge Node";

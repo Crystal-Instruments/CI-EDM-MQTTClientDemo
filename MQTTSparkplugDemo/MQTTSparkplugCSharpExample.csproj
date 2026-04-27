@@ -51,7 +51,7 @@
       <HintPath>bin\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="SparkplugNet">
-      <HintPath>bin\SparkplugNet.dll</HintPath>
+      <HintPath>..\..\EDM\bin\AnyCPU\Debug\Share\SparkplugNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -103,9 +103,11 @@
     </Compile>
     <Compile Include="MQTTSparkplugSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ChangeCommandEdgeNodeForm.resx">
@@ -114,6 +116,13 @@
     <EmbeddedResource Include="MQTTSparkplugForm.resx">
       <DependentUpon>MQTTSparkplugForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
