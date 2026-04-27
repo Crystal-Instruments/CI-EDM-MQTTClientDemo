@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MQTTSparkplugCSharpExample.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ClientIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.19</Value>
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Admin</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">123456</Value>
+    </Setting>
+    <Setting Name="ClientID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SparkplugDemo</Value>
+    </Setting>
+    <Setting Name="GroupIdentifier" Type="System.String" Scope="User">
+      <Value Profile="(Default)">EDM</Value>
+    </Setting>
+    <Setting Name="EdgeNodeIdentifier" Type="System.String" Scope="User">
+      <Value Profile="(Default)">EdgeNode2</Value>
+    </Setting>
+    <Setting Name="ScadaHostIdentifier" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Scada2</Value>
+    </Setting>
+    <Setting Name="UseTLS" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ClientPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1883</Value>
+    </Setting>
+    <Setting Name="IsPrimaryApplication" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
